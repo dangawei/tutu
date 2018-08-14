@@ -12,7 +12,7 @@ axios.defaults.baseURL = '//api.admin.chengxuyuantoutiao.com/';
 axios.defaults.timeout = DEFAULT_TIMEOUT;
 
 axios.defaults.headers = {
-	'token': window.localStorage.getItem('token') || '',
+	'token': localStorage.getItem('token') || '',
 	'Content-Type': 'application/json'
 }
 

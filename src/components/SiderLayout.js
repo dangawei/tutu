@@ -55,9 +55,7 @@ const SiderLayout = ({
 			collapsed={collapsed}>
 			<div className="sider-top">
 				<div className="header-logo">
-					{
-						collapsed && <span>DC数据中心</span>
-					}
+					<span>图图英语</span>
 				</div>
 				{/* <Dropdown overlay={menu}>
 					<div className="header-dropdown">

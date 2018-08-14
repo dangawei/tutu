@@ -30,18 +30,23 @@ const Routers = ({
 		},
 		{
 			path: '/userSetting',
-			component: () => import(/* webpackChunkName: "authority" */ './pages/user/index'),
-			models: () => [import(/* webpackChunkName: "authority" */ './pages/user/model')]
+			component: () => import(/* webpackChunkName: "userSetting" */ './pages/user/index'),
+			models: () => [import(/* webpackChunkName: "userSetting" */ './pages/user/model')]
 		},
 		{
 			path: '/upload',
-			component: () => import(/* webpackChunkName: "authority" */ './pages/upload/index'),
-			models: () => [import(/* webpackChunkName: "authority" */ './pages/upload/model')]
+			component: () => import(/* webpackChunkName: "upload" */ './pages/upload/index'),
+			models: () => [import(/* webpackChunkName: "upload" */ './pages/upload/model')]
 		},
 		{
 			path: '/roleSetting',
-			component: () => import(/* webpackChunkName: "authority" */ './pages/role/index'),
-			models: () => [import(/* webpackChunkName: "authority" */ './pages/role/model')]
+			component: () => import(/* webpackChunkName: "roleSetting" */ './pages/role/index'),
+			models: () => [import(/* webpackChunkName: "roleSetting" */ './pages/role/model')]
+		},
+		{
+			path: '/authMenu',
+			component: () => import(/* webpackChunkName: "authMenu" */ './pages/authmenu/index'),
+			models: () => [import(/* webpackChunkName: "authMenu" */ './pages/authmenu/model')]
 		},
 	]
 

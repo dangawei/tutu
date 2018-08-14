@@ -70,7 +70,7 @@ const App = ({
 				dispatch({ type: 'app/loginout' })
 				break;
 			case 'setting':
-			    window.location.href = 'http://123.59.85.60/dc3.0-auth/#/login'
+			    // window.location.href = 'http://123.59.85.60/dc3.0-auth/#/login'
 				// if(pathname !== '/authority') {
 				// 	window.location.href = 'http://123.59.85.60/dc3.0-auth/#/login'
 				// }

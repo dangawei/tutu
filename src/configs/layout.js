@@ -40,7 +40,7 @@ module.exports = {
 		{
 			cname: '菜单管理',
 			icon: 'tuisong',
-			modelpage: '/menu',
+			modelpage: '/authMenu',
 			id: 3
 		}
 	]

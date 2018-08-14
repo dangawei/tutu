@@ -116,15 +116,15 @@ export default {
 			})
 		},
 		
-
 		// 退出登录
 		*loginout({}, { call, put }) {
-			const data = yield call(api_login.logout);
-			if (data.code == 200 || data.code == 1002) {
-				localStorage.removeItem('USER_NAME');
-				localStorage.removeItem('USER_CNAME');
+			const res = yield call(api_login.logout);
+			console.log('logout:::', res.data);
+			if (res.data.code == 0) {
+				localStorage.removeItem('token');
+				localStorage.removeItem('account');
 				localStorage.removeItem('HAS_LOGIN');
-				yield put({ type: 'redirect' });
+				yield put(routerRedux.push('/login'))
 			} else {
 				message.error('退出登录失败');
 			}

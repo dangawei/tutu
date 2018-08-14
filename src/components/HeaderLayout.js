@@ -34,9 +34,9 @@ const HeaderLayout = ({
 
 			<div className="header-right">
 				
-				<div className="header-icon header-search">
+				{/* <div className="header-icon header-search">
 					<Icon type={"search"} />
-				</div>
+				</div> */}
 
 				<div className="header-icon header-msg">
 					<Icon type={"bell"} />

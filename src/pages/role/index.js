@@ -4,7 +4,7 @@ import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
 import PaginationLayout from '@/components/PaginationLayout';
 
-import { Form, Input, Button, Popconfirm, Modal } from 'antd';
+import { Form, Input, Button, Popconfirm, Modal, notification, Icon } from 'antd';
 const FormItem = Form.Item;
 
 const RoleSetting = ({
@@ -29,8 +29,9 @@ const RoleSetting = ({
             dataIndex: 'action',
             render: (txt, record, index) => {
                 return <span>
+                    <Button type="primary" size="small" onClick={() => handleGetmenu(record)}>授权</Button>
                     <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record)}>
-                        <Button type="danger" size="small">删除</Button>
+                        <Button type="danger" size="small" style={{ marginLeft: 10 }}>删除</Button>
                     </Popconfirm>
                 </span>
             }
@@ -70,6 +71,16 @@ const RoleSetting = ({
         	type: 'roleSetting/addRole',
         	payload: getFieldValue('rolename')
         })
+    }
+
+    // 权限菜单
+    const handleGetmenu = () => {
+    	notification.open({
+            message: '功能开发中！',
+            description: '请等待后续开发。',
+            duration: 1,
+            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
+        });
     }
     
     // 展示modal

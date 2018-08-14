@@ -14,8 +14,8 @@ export default {
 	deleteRole: data => axios.post('role/delete', data),
 
 	// 角色已有权限
-	forbiddenRole: data => axios.post('role/menus', data),
+	menusRole: data => axios.post('role/menus', data),
 
 	// 设置角色权限
-	usingRole: data => axios.post('role/setAuthority', data)
+	setauthRole: data => axios.post('role/setAuthority', data)
 }

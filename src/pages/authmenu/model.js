@@ -1,9 +1,8 @@
 import api from './service';
-import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 
 export default {
-	namespace: 'roleSetting',
+	namespace: 'authmenu',
 
 	state: {
 		tableData: [],
@@ -13,16 +12,16 @@ export default {
 
 	subscriptions: {
 		setup({ dispatch, history }) {	
-			dispatch({ 
-				type: 'getRole',
-				payload: ''
-			});
+			// dispatch({ 
+			// 	type: 'getMenu',
+			// 	payload: ''
+			// });
 		},
 	},
 
 	effects: {
-		*getRole({ payload }, { call, put }) {
-            const res = yield call(api.getRole, payload);
+		*getMenu({ payload }, { call, put }) {
+            const res = yield call(api.getMenu, payload);
 			if (res.data.code == 0) {
 				yield put({
 					type: 'save', 
@@ -35,8 +34,8 @@ export default {
 			}
 		},
 		
-		*addRole({ payload }, { call }) {
-			const res = yield call(api.addRole, payload);
+		*addMenu({ payload }, { call }) {
+			const res = yield call(api.addMenu, payload);
 			if (res.data.code == 0) {
 				message.success(res.data.message);
 			} else {
@@ -44,8 +43,8 @@ export default {
 			}
 		},
 
-		*deleteRole({ payload }, { call }) {
-			const res = yield call(api.deleteRole, payload);
+		*deleteMenu({ payload }, { call }) {
+			const res = yield call(api.deleteMenu, payload);
 			if (res.data.code == 0) {
 				message.success(res.data.message);
 			} else {
@@ -53,31 +52,13 @@ export default {
 			}
 		},
 
-		*setauthRole({ payload }, { call }) {
-			const res = yield call(api.setauthRole, payload);
+		*updateMenu({ payload }, { call }) {
+			const res = yield call(api.updateMenu, payload);
 			if (res.data.code == 0) {
 				message.success(res.data.message);
 			} else {
 				message.error(res.data.message);
 			}
-		},
-
-		*menusRole({ payload }, { call }) {
-			const res = yield call(api.menusRole, payload);
-			if (res.data.code == 0) {
-				message.success(res.data.message);
-			} else {
-				message.error(res.data.message);
-			}
-		},
-
-		*setaccount({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					account: payload
-				}
-			})
 		},
 
 		*changeModal({ payload }, { put }) {
