@@ -1,18 +1,12 @@
 /**
  * 登录模块
  */
-import { J, AUTH_BASIC_URL } from '@/configs/request';
+import { axios } from '@/configs/request';
 
 export default {
 	// 登入
-	login: data => J('/login/in', data),
+	login: data => axios.post('user/login', data),
 
 	// 登出
-	logout: () => J('/qqoauth/loginout'),
-
-	// 权限
-	getAuth: () => J('/login/getauth'),
-
-	// 获取左侧导航
-	getLeftMenu: data => J('/login/getleftmenu', data),
+	logout: () => axios.post('user/logout'),
 }

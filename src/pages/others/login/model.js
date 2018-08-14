@@ -1,7 +1,6 @@
 import api from './service';
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
-import Global from '@/utils/global';
 
 export default {
 	namespace: "login",
@@ -19,18 +18,18 @@ export default {
 
 	effects: {
 		*login({ payload }, { call, put, select }) {
-			const res = yield call(api.login, payload);
-			if (res.code == 200) {
-				localStorage.setItem('USER_NAME', res.entity.realname);
-				localStorage.setItem('USER_CNAME', res.entity.username);
+			const res = yield call(api.login, {
+				account: payload.username,
+				password: payload.password
+			});
+			if (res.data.code == 0) {
+				localStorage.setItem('token', res.data.data.token);
+				localStorage.setItem('account', res.data.data.account);
 				localStorage.setItem('HAS_LOGIN', true);
-				yield call(api.getAuth, { username: res.entity.realname })
-				yield put({type: 'save', payload});
-				let redirectUrl = yield select(state => state.app.redirectUrl);
-				//window.location.replace(redirectUrl)
+				// yield put({type: 'save', payload});
 				yield put(routerRedux.push('/'));
 			} else {
-				message.error('用户名或密码有误');
+				message.error(res.data.message);
 			}
 		}
 	},

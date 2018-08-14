@@ -28,6 +28,16 @@ const Routers = ({
 			component: () => import(/* webpackChunkName: "authority" */ './pages/others/authority/index'),
 			models: () => [import(/* webpackChunkName: "authority" */ './pages/others/authority/model')]
 		},
+		{
+			path: '/userSetting',
+			component: () => import(/* webpackChunkName: "authority" */ './pages/user/index'),
+			models: () => [import(/* webpackChunkName: "authority" */ './pages/user/model')]
+		},
+		{
+			path: '/upload',
+			component: () => import(/* webpackChunkName: "authority" */ './pages/upload/index'),
+			models: () => [import(/* webpackChunkName: "authority" */ './pages/upload/model')]
+		},
 	]
 
 	return (
@@ -43,9 +53,9 @@ const Routers = ({
 								/>
 							))
 						}
-						<Redirect exact from='/'  to='/dftt/dftt-zq/task' />
-						<Redirect exact from='/dftt'  to='/dftt/dftt-zq/task' />
-						<Redirect exact from='/dftt/dftt-zq'  to='/dftt/dftt-zq/task' />
+						<Redirect exact from='/'  to='/userSetting' />
+						{/* <Redirect exact from='/dftt'  to='/dftt/dftt-zq/task' />
+						<Redirect exact from='/dftt/dftt-zq'  to='/dftt/dftt-zq/task' /> */}
 						
 					</Switch>
 				</App>

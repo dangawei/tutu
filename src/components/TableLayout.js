@@ -105,7 +105,7 @@ class TableLayout extends Component {
 	render() {
 		let { allColumns, tableInfo, showToolbar, dataSource, scrollY } = this.props
 		return (
-			<div className="table-wrapper">
+			<div className="table-wrapper" style={{ padding: 10 }}>
 				{
 					showToolbar && <div className="table-toolbar clearfix">
 						<div className="table-toolbar-title fl">
@@ -173,7 +173,7 @@ TableLayout.propTypes = {
 };
 
 TableLayout.defaultProps = {
-	showToolbar: true,
+	showToolbar: false,
 	filterColumns: []
 }
 

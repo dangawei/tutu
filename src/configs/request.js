@@ -5,25 +5,27 @@ import { message } from 'antd';
 
 const DEFAULT_TIMEOUT = 15000;
 
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL = '//api.admin.chengxuyuantoutiao.com/';
+//axios.defaults.headers.common['token'] = window.localStorage.getItem('token');
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
+//axios.defaults.withCredentials = true;
 axios.defaults.timeout = DEFAULT_TIMEOUT;
 
 axios.defaults.headers = {
-	'X-Requested-With': 'XMLHttpRequest',
-	"Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8'
+	'token': window.localStorage.getItem('token') || '',
+	'Content-Type': 'application/json'
 }
 
-axios.defaults.transformRequest = [function (data, headers) {
-	return qs.stringify(data);
-}]
+// axios.defaults.transformRequest = [function (data, headers) {
+// 	return qs.stringify(data);
+// }]
 
-axios.defaults.paramsSerializer = function (params) {
-	return qs.stringify(params);
-}
+// axios.defaults.paramsSerializer = function (params) {
+// 	return qs.stringify(params);
+// }
 
-export const BASIC_URL = '//123.59.85.60/datacenter';
+export const BASIC_URL = '//api.admin.chengxuyuantoutiao.com/';
 //export const BASIC_URL = '//123.59.85.60/reportsapi';
-export const AUTH_BASIC_URL = '//123.59.85.60/authsysapi';
 
 /**
  * jsonp方法
@@ -67,6 +69,18 @@ let J = async (url, data) => {
 	})
 }
 
+let getParams = (data) => {
+	if (typeof data === 'object') {
+		let formData = new FormData();
+		for (var key in data) {
+			formData.append(key, data[key]);
+		}
+		return formData;
+	} else {
+		return data;
+	}
+}
+
 /**
  * post方法
  * @param  {[type]} url  url拼接
@@ -74,10 +88,15 @@ let J = async (url, data) => {
  * @return {[type]}      [description]
  */
 let POST = async (url, data) => {
-	return fetch(url.indexOf('//') > -1 ? url : BASIC_URL + url, {
+	return fetch(BASIC_URL + url, {
 		method: 'POST',
-		body: data,
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json'
+			// 'token': window.localStorage.getItem('token') || ''
+		},
 	}).then(res => {
+		console.log('fetchRES:::', res)
 		if (res) {
             switch (res.code) {
             	case '1003':

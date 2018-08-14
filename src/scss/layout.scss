@@ -272,18 +272,14 @@
 	}
 	// 下拉选择
 	form .ant-select,
-	form .ant-cascader-picker,
-	form .ant-input {
+	form .ant-cascader-picker {
 		width: 165px;
 	}
 	form .ant-calendar-picker-input {
 		width: auto !important;
 		.ant-calendar-range-picker-input {
-			width: 200px;
+			width: auto;
 		}
-	}
-	.ant-form-item-label {
-		width: 90px;
 	}
 	.header-form-filter {
 		display: none;
