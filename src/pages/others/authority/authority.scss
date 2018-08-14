@@ -1,0 +1,182 @@
+/**
+ * 表格
+ */
+.ant-table-scroll .ant-table-body {
+	overflow-x: auto!important;
+}
+
+/**
+ * 可编辑表单
+ */
+.form-editable {
+	width: 400px;
+	.ant-form-item {
+		margin: 10px 0;
+	}
+	.ant-form-item-label {
+		text-align: left;
+	}
+	.ant-input-disabled {
+		background: #fff;
+		color: inherit;
+		cursor: auto;
+		border-color: transparent;
+	}
+	.ant-input-group-addon {
+		border: none;
+		cursor: pointer;
+	}
+	.ant-form-item-children {
+		color: rgba(0, 0, 0, 0.6);
+	}
+	.ant-input {
+		// border: none;
+		color: rgba(0, 0, 0, 0.6);
+	}
+	.form-text {
+		padding: 4px 11px;
+	}
+	.form-btns {
+		text-align: center;
+		button {
+			margin: 5px;
+		}
+	}
+}
+
+/**
+ * 弹出表单
+ */
+.ant-form-horizontal .ant-form-item {
+	margin-bottom: 10px;
+}
+
+.panel-edit {
+	display: flex;
+}
+
+/**
+ * 配置面板
+ */
+
+.config-panel {
+	width: 360px;
+	background: #fff;
+	padding: 10px 20px;
+	&.config-panel-check {
+		width: 500px;
+	}
+	&.config-tree .config-content{
+		height: 442px;
+	}
+	.config-title {
+		font-size: 14px;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
+	.config-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	.config-radio-group {
+		.anticon-close {
+			position: absolute;
+			right: -4px;
+			top: -4px;
+			z-index: 2;
+			color: #fff;
+			background: #3f94e2;
+			border-radius: 50%;
+			font-size: 12px;
+			padding: 1px;
+			display: none;
+		}
+		label:hover {
+			.anticon-close {
+				display: block;
+			}
+		}
+	}
+	.config-content {
+		border: 1px solid #d9d9d9;
+		border-radius: 4px;
+		padding: 10px;
+		height: 400px;
+		display: flex;
+		flex-direction: column;
+	}
+	.config-body {
+		margin-top: 5px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		flex: 1;
+	}
+	.config-btns {
+		text-align: right;
+		button {
+			margin: 5px;
+		}
+	}
+	.ant-tree-title {
+		i {
+			display: none;
+			margin-left: 10px;
+		}
+		&:hover i {
+			display: inline-block;
+		}
+	}
+}
+.popover-checkbox-group {
+	overflow: auto;
+	max-height: 200px;
+}
+.ant-checkbox-group-vertical {
+	.ant-checkbox-wrapper {
+		display: block;
+		+ .ant-checkbox-wrapper {
+			margin-left: 0;
+		}
+	}
+}
+
+.ant-tree.single-tree li span.ant-tree-switcher, .ant-tree li span.ant-tree-iconEle {
+	width: 5px;
+}
+
+/**
+ * 选择组
+ */
+.check-groups {
+	.check-all {
+		border-bottom: 1px solid #d9d9d9;
+		padding-bottom: 5px;
+	}
+	.check-list {
+		padding: 10px;
+	}
+	.check-item {
+		margin: 10px 0;
+		display: flex;
+		.check-label {
+			color: #333;
+			display: block;
+			width: 75px;
+		}
+		.check-group {
+			flex: 1;
+			label {
+				margin-bottom: 5px;
+			}
+		}
+		.ant-checkbox-group-item {
+			margin: 5px 20px 5px 0;
+		}
+		.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+			margin-left: 0;
+			margin-right: 8px;
+		}
+	}
+}
