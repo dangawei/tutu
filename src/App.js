@@ -29,8 +29,8 @@ const App = ({
 
 
 	// 用户未登录跳转到登录页面
-	if (!localStorage.getItem('USER_NAME') && pathname !== '/login') {
-		dispatch({ type: 'app/redirect' })
+	if (!localStorage.getItem('token') && pathname !== '/login') {
+		dispatch(routerRedux.push('/login'))
 	}
 
 	// 选中菜单

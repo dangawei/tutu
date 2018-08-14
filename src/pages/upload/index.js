@@ -11,7 +11,12 @@ const Myupload = ({
     let { dispatch } = props;
     
     const handleUpload = (file) => {
-        console.log('file', file)
+        let formData = new FormData();
+        formData.append('file', file)
+        dispatch({
+        	type: '_upload/upload',
+        	payload: formData
+        })
     }
 
 	return (

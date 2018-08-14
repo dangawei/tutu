@@ -21,9 +21,15 @@ module.exports = {
 	datalist: [
 		{
 			cname: '用户管理',
-			icon: 'shitu',
+			icon: 'team',
 			modelpage: '/userSetting',
 			id: 1
+		},
+		{
+			cname: '角色管理',
+			icon: 'user',
+			modelpage: '/roleSetting',
+			id: 4
 		},
 		{
 			cname: '文件上传',

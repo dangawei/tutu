@@ -103,7 +103,7 @@ class TablePopoverLayout extends Component {
 				placement="top"
 				trigger="click"
 				{...others}>
-				<a onClick={this.handleEle}>{newValue}</a>
+				<a onClick={this.handleEle} style={{ color: '#333'}}>{newValue}</a>
 			</Popover>
 		);
 	}

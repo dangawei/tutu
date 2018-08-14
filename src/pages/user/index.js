@@ -3,8 +3,10 @@ import { connect } from 'dva';
 import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
 import PaginationLayout from '@/components/PaginationLayout';
+import TablePopoverLayout from '@/components/TablePopoverLayout';
+import VaildForm from './VaildForm';
 
-import { Form, DatePicker, Input, Button, Popconfirm } from 'antd';
+import { Form, DatePicker, Input, Button, Popconfirm, message, Modal } from 'antd';
 import moment from 'moment';
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -14,14 +16,26 @@ const UserSetting = ({
     ...props
 }) => {
     let { dispatch } = props;
-    let { tableData, account, startTime, endTime } = userSetting
-
+    let { tableData, account, startTime, endTime, modalShow } = userSetting;
     const columns = [
         {
             title: '用户名',
             dataIndex: 'account',
-            editable: true,
-            sorter: true
+            sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改用户名'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'userSetting/updateUser',
+							payload: {
+								id: record.id,
+								account: v
+							}
+						})
+					}/>
         }, {
         	title: '用户头像',
             dataIndex: 'avatar',
@@ -31,22 +45,74 @@ const UserSetting = ({
         }, {
         	title: '手机号',
             dataIndex: 'phone',
-            editable: true,
-        	sorter: true,
+            sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改手机号'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'userSetting/updateUser',
+							payload: {
+								id: record.id,
+								phone: v
+							}
+						})
+					}/>
         }, {
         	title: '邮箱',
             dataIndex: 'email',
-            editable: true
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改邮箱'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'userSetting/updateUser',
+							payload: {
+								id: record.id,
+								email: v
+							}
+						})
+					}/>
         }, {
         	title: '姓名',
             dataIndex: 'name',
-            editable: true,
-        	sorter: true
+            sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改姓名'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'userSetting/updateUser',
+							payload: {
+								id: record.id,
+								name: v
+							}
+						})
+					}/>
         }, {
         	title: '性别',
             dataIndex: 'sex',
-            editable: true,
-        	sorter: true
+        	sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改性别'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'userSetting/updateUser',
+							payload: {
+								id: record.id,
+								sex: v
+							}
+						})
+					}/>
         }, {
         	title: '用户id',
         	dataIndex: 'id',
@@ -146,16 +212,58 @@ const UserSetting = ({
             endTime: endTime,
             account: account
         }
-        for (var key in PP) {
-            if (!PP[key]) {
-                delete PP[key]
-            }
-        }
      	dispatch({
     		type: 'userSetting/getUser',
-    		payload: PP
+    		payload: filterObj(PP)
     	})
     }
+    
+    // 展示modal
+    const changeModalState = (show) => {
+        dispatch({
+        	type: 'userSetting/changeModal',
+        	payload: show
+        })
+    }
+
+    // 提交表单
+    const submitForm = (userinfo) => {
+        dispatch({
+        	type: 'userSetting/addUser',
+        	payload: filterObj(userinfo)
+        })
+    }
+
+    // 去除对象里空键
+    const filterObj = (obj = {}) => {
+        for (var key in obj) {
+        	if (!obj[key]) {
+        		delete obj[key]
+        	}
+        }
+        return obj
+    }
+
+    // 确认密码
+    // const compareToFirstPassword = (rule, value, callback) => {
+    // 	if (value && value !== getFieldValue('password')) {
+    // 		callback('两次密码输入不相同！');
+    // 	} else {
+    // 		callback();
+    // 	}
+    // }
+   
+    // 表单布局
+    const formItemLayout = {
+        labelCol: {
+            xs: { span: 24 },
+            sm: { span: 8 },
+        },
+        wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 16 },
+        }
+    };
 
 	return (
 		<div>
@@ -184,11 +292,86 @@ const UserSetting = ({
                     </FormItem>
 
                     <FormItem>
-                        <Button type="primary">添加用户</Button>
+                        <Button type="primary" onClick={() => changeModalState(true)}>添加用户</Button>
                     </FormItem>
 
                 </Form>
             </FormInlineLayout>
+
+            <Modal
+                title="新增用户"
+                visible={modalShow}
+                onOk={ () => changeModalState(false) }
+                onCancel= { () => changeModalState(false) }
+                okText="确认"
+                cancelText="取消"
+                footer={null}
+                >
+                <VaildForm submitForm={submitForm}>
+                </VaildForm>
+                {/* <Form>
+                    <FormItem
+                        {...formItemLayout}
+                        label="用户名"
+                        >
+                        {getFieldDecorator('name', {
+                            rules: [{ required: true, message: '请输入用户名!', whitespace: true }],
+                        })(
+                            <Input />
+                        )}
+                    </FormItem>
+
+                    <FormItem
+                        {...formItemLayout}
+                        label="密码"
+                        >
+                        {getFieldDecorator('password', {
+                            rules: [{
+                                required: true, message: '请输入密码!',
+                            }],
+                        })(
+                            <Input type="password" />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="确认密码"
+                        >
+                        {getFieldDecorator('confirm', {
+                            rules: [{
+                               required: true, message: '请再次确认密码!',
+                            }],
+                        })(
+                            <Input type="password" />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="E-mail"
+                        >
+                        {getFieldDecorator('email', {
+                            rules: [{
+                                type: 'email', message: '邮箱格式有误!',
+                            }, {
+                                required: true, message: '请输入邮箱l!',
+                            }],
+                        })(
+                            <Input />
+                        )}
+                    </FormItem>
+
+                    <FormItem
+                        {...formItemLayout}
+                        label="手机号"
+                        >
+                        {getFieldDecorator('phone', {
+                            rules: [{ required: true, message: '请输入手机号!' }],
+                        })(
+                            <Input style={{ width: '100%' }} />
+                        )}
+                    </FormItem>
+                </Form> */}
+            </Modal>
 
             <TableLayout
                 dataSource={tableData}
@@ -203,7 +386,7 @@ const UserSetting = ({
 };
 
 UserSetting.propTypes = {
-	userSetting: PropTypes.object,
+    userSetting: PropTypes.object
 };
 
 export default connect(({ userSetting }) => ({ userSetting }))(UserSetting);

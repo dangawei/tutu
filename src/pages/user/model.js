@@ -9,7 +9,8 @@ export default {
 		tableData: [],
 		startTime: '',
 		endTime: '',
-		account: ''
+		account: '',
+		modalShow: false
 	},
 
 	subscriptions: {
@@ -25,7 +26,7 @@ export default {
 	},
 
 	effects: {
-		*getUser({ payload }, { call, put, select }) {
+		*getUser({ payload }, { call, put }) {
 			const res = yield call(api.getUser, payload);
 			if (res.data.code == 0) {
 				yield put({
@@ -39,7 +40,7 @@ export default {
 			}
 		},
 		
-		*addUser({ payload }, { call, put, select }) {
+		*addUser({ payload }, { call }) {
 			console.log('payload::', payload)
 			const res = yield call(api.addUser, payload);
 			if (res.data.code == 0) {
@@ -100,6 +101,15 @@ export default {
 				payload: {
 					startTime: payload.startTime,
 					endTime: payload.endTime
+				}
+			})
+		},
+
+		*changeModal({ payload }, { put }) {
+			yield put({
+				type: 'save',
+				payload: {
+					modalShow: payload
 				}
 			})
 		}

@@ -32,24 +32,24 @@ const Login = ({
 		<div className="form">
 			<form>
 				<FormItem hasFeedback>
-				{getFieldDecorator('username', {
-					rules: [
-						{
-							required: true,
-							message: '请输入用户名！'
-						}
-					],
-				})(<Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} onPressEnter={handleOk} placeholder="用户名" />)}
+					{getFieldDecorator('username', {
+						rules: [
+							{
+								required: true,
+								message: '请输入用户名！'
+							}
+						],
+					})(<Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} onPressEnter={handleOk} placeholder="用户名" />)}
 				</FormItem>
 				<FormItem hasFeedback>
-				{getFieldDecorator('password', {
-					rules: [
-						{
-							required: true,
-							message: '请输入密码！'
-						}
-					],
-				})(<Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" onPressEnter={handleOk} placeholder="密码" />)}
+					{getFieldDecorator('password', {
+						rules: [
+							{
+								required: true,
+								message: '请输入密码！'
+							}
+						],
+					})(<Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" onPressEnter={handleOk} placeholder="密码" />)}
 				</FormItem>
 				<Row>
 					<Button type="primary" onClick={handleOk} loading={loading.effects.login}>

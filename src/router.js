@@ -38,6 +38,11 @@ const Routers = ({
 			component: () => import(/* webpackChunkName: "authority" */ './pages/upload/index'),
 			models: () => [import(/* webpackChunkName: "authority" */ './pages/upload/model')]
 		},
+		{
+			path: '/roleSetting',
+			component: () => import(/* webpackChunkName: "authority" */ './pages/role/index'),
+			models: () => [import(/* webpackChunkName: "authority" */ './pages/role/model')]
+		},
 	]
 
 	return (
