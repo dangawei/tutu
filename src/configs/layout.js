@@ -20,29 +20,50 @@ module.exports = {
 
 	datalist: [
 		{
-			cname: '用户管理',
+			name: '用户管理',
 			icon: 'team',
 			modelpage: '/userSetting',
 			id: 1
 		},
 		{
-			cname: '角色管理',
+			name: '角色管理',
 			icon: 'user',
 			modelpage: '/roleSetting',
 			id: 4
 		},
 		{
-			cname: '文件上传',
+			name: '文件上传',
 			icon: 'upload',
 			modelpage: '/upload',
 			id: 2
 		},
 		{
-			cname: '菜单管理',
+			name: '菜单管理',
 			icon: 'tuisong',
 			modelpage: '/authMenu',
 			id: 3
-		}
+		},
+		// {
+		// 	name: '系统管理',
+		// 	icon: 'appstore-o',
+		// 	modelpage: '',
+		// 	id: 4,
+		// 	children: [
+		// 		{
+		// 			name: '日志管理',
+		// 			icon: 'calendar',
+		// 			modelpage: '',
+		// 			id: 5,
+        //             children: [
+		// 				{
+		// 					name: '删除日志',
+		// 					icon: '',
+		// 					modelpage: '/system/logs/deleteLogs',
+		// 				}
+		// 			]
+		// 		}
+		// 	]
+		// }
 	]
 
 	// 模拟接口数据

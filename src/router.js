@@ -19,16 +19,6 @@ const Routers = ({
 			models: () => [import(/* webpackChunkName: "login" */ './pages/others/login/model')]
 		},
 		{
-			path: '/sitemap',
-			component: () => import(/* webpackChunkName: "sitemap" */ './pages/others/sitemap/index'),
-			models: () => [import(/* webpackChunkName: "sitemap" */ './pages/others/sitemap/model')]
-		},
-		{
-			path: '/authority',
-			component: () => import(/* webpackChunkName: "authority" */ './pages/others/authority/index'),
-			models: () => [import(/* webpackChunkName: "authority" */ './pages/others/authority/model')]
-		},
-		{
 			path: '/userSetting',
 			component: () => import(/* webpackChunkName: "userSetting" */ './pages/user/index'),
 			models: () => [import(/* webpackChunkName: "userSetting" */ './pages/user/model')]
@@ -48,6 +38,11 @@ const Routers = ({
 			component: () => import(/* webpackChunkName: "authMenu" */ './pages/authmenu/index'),
 			models: () => [import(/* webpackChunkName: "authMenu" */ './pages/authmenu/model')]
 		},
+		{
+			path: '/system/logs/deleteLogs',
+			component: () => import(/* webpackChunkName: "deleteLogs" */ './pages/systemManage/logManage/deleteLog/index'),
+			models: () => [import(/* webpackChunkName: "deleteLogs" */ './pages/systemManage/logManage/deleteLog/model')]
+		}
 	]
 
 	return (

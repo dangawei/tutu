@@ -18,11 +18,11 @@ const SiderLayout = ({
 			let ico = (item.icon && item.icon !== 'tongji') ? item.icon: 'bars'
 			return (
 				<SubMenu 
-					key={item.modelpage}
+					key={item.id}
 					title={
 						<span>
 							<Icon type={ico} />
-							<span>{item.cname}</span>
+							<span>{item.name}</span>
 						</span>
 					}>
 					{
@@ -32,19 +32,13 @@ const SiderLayout = ({
 			)
 		} else {
 			let _ico = (item.icon && item.icon !== 'tongji') ? item.icon : ''
-			return <Menu.Item key={item.modelpage} title={item.cname}>
+			let _path = (item.modelpage) ? item.modelpage : item.id
+			return <Menu.Item key={_path} title={item.name}>
 						{_ico && <Icon type={_ico} />}
-						<span>{item.cname}</span>
+						<span>{item.name}</span>
 					</Menu.Item>
 		}
 	}
-
-	const menu = (
-		<Menu onClick={menuSelect} className={'dropdown-dark'}>
-			<Menu.Item key="all">全部项目</Menu.Item>
-			<Menu.Item key="dftt">东方头条</Menu.Item>
-		</Menu>
-	);
 
 	return (
 		<Sider 

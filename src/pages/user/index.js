@@ -6,6 +6,8 @@ import PaginationLayout from '@/components/PaginationLayout';
 import TablePopoverLayout from '@/components/TablePopoverLayout';
 import VaildForm from './VaildForm';
 
+import { filterObj } from '@/utils/tools';
+
 import { Form, DatePicker, Input, Button, Popconfirm, message, Modal } from 'antd';
 import moment from 'moment';
 const FormItem = Form.Item;
@@ -102,8 +104,8 @@ const UserSetting = ({
             render: (text, record) =>
 				<TablePopoverLayout
 					title={'修改性别'}
-					valueData={text || '无'}
-					defaultValue={text || '无'}
+					valueData={ (text == 1) ? '男' : (text == 2) ? '女' : '未知' }
+					defaultValue={ (text == 1) ? '男' : (text == 2) ? '女' : '未知' }
 					onOk={v => 
 						dispatch({
 							type: 'userSetting/updateUser',
@@ -232,16 +234,6 @@ const UserSetting = ({
         	type: 'userSetting/addUser',
         	payload: filterObj(userinfo)
         })
-    }
-
-    // 去除对象里空键
-    const filterObj = (obj = {}) => {
-        for (var key in obj) {
-        	if (!obj[key]) {
-        		delete obj[key]
-        	}
-        }
-        return obj
     }
 
     // 确认密码

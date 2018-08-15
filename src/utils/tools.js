@@ -52,16 +52,16 @@ module.exports = {
 	},
 
 	/**
-	 * 是否显示汇总
-	 * @param  {[type]} showDetail [description]
-	 * @param  {[type]} accid      [description]
-	 * @return {[type]}            [description]
+	 * 过滤值为空的对象key
+	 * @param  {Object}
 	 */
-	showTotalOrList: (showDetail, accid) => {
-		return {
-			showTotal: (showDetail && (accid === '负责人汇总' || accid === '汇总')) || !showDetail,
-			showList: (showDetail && !(accid === '负责人汇总' || accid === '汇总')) || !showDetail
+	filterObj: (obj = {}) => {
+		for (var key in obj) {
+			if (obj[key] === '' || obj[key] === null || obj[key] === undefined) {
+				delete obj[key]
+			}
 		}
+		return obj
 	},
 
 	/**

@@ -3,6 +3,9 @@ import { connect } from 'dva';
 import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
 import PaginationLayout from '@/components/PaginationLayout';
+import TablePopoverLayout from '@/components/TablePopoverLayout';
+import VaildForm from './VaildForm';
+import { filterObj } from '@/utils/tools';
 
 import { Form, Input, Button, Popconfirm, Modal, notification, Icon, DatePicker } from 'antd';
 import moment from 'moment';
@@ -14,7 +17,7 @@ const Authmenu = ({
     ...props
 }) => {
     let { dispatch, form } = props;
-    let { tableData, modalShow, account } = authmenu;
+    let { tableData, modalShow, startTime, endTime } = authmenu;
 
     const columns = [
         {
@@ -32,19 +35,92 @@ const Authmenu = ({
         }, {
         	title: '菜单名称',
         	dataIndex: 'menuName',
-        	sorter: true
+            sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改菜单名称'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'authmenu/updateMenu',
+							payload: {
+								id: record.id,
+								menuName: v
+							}
+						})
+					}/>
         }, {
         	title: '菜单路径',
         	dataIndex: 'path',
-        	sorter: true
+        	sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改菜单路径'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'authmenu/updateMenu',
+							payload: {
+								id: record.id,
+								path: v
+							}
+						})
+					}/>
         }, {
         	title: '菜单状态',
         	dataIndex: 'status',
-        	sorter: true
+            sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改菜单状态'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'authmenu/updateMenu',
+							payload: {
+								id: record.id,
+								status: v
+							}
+						})
+					}/>
         }, {
         	title: 'url',
         	dataIndex: 'url',
-        	sorter: true
+        	sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改url'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'authmenu/updateMenu',
+							payload: {
+								id: record.id,
+								url: v
+							}
+						})
+					}/>
+        }, {
+        	title: '图标',
+        	dataIndex: 'icon',
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改图标'}
+					valueData={text || '无'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'authmenu/updateMenu',
+							payload: {
+								id: record.id,
+								icon: v
+							}
+						})
+					}/>
         }, {
         	title: '操作',
             dataIndex: 'action',
@@ -63,82 +139,51 @@ const Authmenu = ({
      * @param  {object} 列数据
      */
     const handleDelete = (param) => {
-        // dispatch({
-    	// 	type: 'authmenu/deleteMenu',
-    	// 	payload: param.id
-        // })
-        notification.open({
-            message: '功能开发中！',
-            description: '请等待后续开发。',
-            duration: 1,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
-        });
-    }
-
-    // 输入菜单
-    const handleInput = (e) => {
-        // dispatch({
-    	// 	type: 'authmenu/setaccount',
-    	// 	payload: e.target.value
-        // })
-        notification.open({
-            message: '功能开发中！',
-            description: '请等待后续开发。',
-            duration: 1,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
-        });
-    }
-
-    // 搜索
-    const handleSearch = () => {
-     	// dispatch({
-    	// 	type: 'authmenu/getMenu',
-    	// 	payload: account
-        // })
-        notification.open({
-            message: '功能开发中！',
-            description: '请等待后续开发。',
-            duration: 1,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
-        });
+        dispatch({
+    		type: 'authmenu/deleteMenu',
+    		payload: param.id
+        })
     }
 
     // 添加菜单
-    const handleSubmit = () => {
-        // dispatch({
-        // 	type: 'authmenu/addMenu',
-        // 	payload: getFieldValue('rolename')
-        // })
-        notification.open({
-            message: '功能开发中！',
-            description: '请等待后续开发。',
-            duration: 1,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
-        });
-    }
-
-    // 权限菜单
-    const handleGetmenu = () => {
-    	notification.open({
-            message: '功能开发中！',
-            description: '请等待后续开发。',
-            duration: 1,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
-        });
+    const submitForm = (menuinfo) => {
+    	dispatch({
+    		type: 'authmenu/addMenu',
+    		payload: filterObj(menuinfo)
+    	})
     }
     
     // 展示modal
     const changeModalState = (show) => {
-        // dispatch({
-        // 	type: 'roleSetting/changeModal',
-        // 	payload: show
-        // })
-        notification.open({
-            message: '功能开发中！',
-            description: '请等待后续开发。',
-            duration: 1,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
-        });
+        dispatch({
+        	type: 'authmenu/changeModal',
+        	payload: show
+        })
+    }
+
+    // 选择时间框
+    const datepickerChange = (d, t) => {
+        dispatch({
+        	type: 'authmenu/settime',
+        	payload: {
+                startTime: t[0] + ':00',
+                endTime: t[1] + ':00'
+            }
+        })
+    }
+
+    // 搜索
+    const handleSearch = () => {
+    	let PP = {
+    		pageNum: 1,
+    		pageSize: 10,
+    		startTime: startTime,
+    		endTime: endTime
+    	}
+    	dispatch({
+    		type: 'authmenu/getMenu',
+    		payload: filterObj(PP)
+    	})
     }
    
 
@@ -146,7 +191,17 @@ const Authmenu = ({
 		<div>
 			<FormInlineLayout>
 			    <Form layout="inline" style={{ marginLeft: 15 }}>
-                    
+                    <FormItem label="时间">
+                        <RangePicker
+                            format="YYYY-MM-DD HH:mm"
+                            showTime={{
+                                hideDisabledOptions: true,
+                                defaultValue: [moment('00:00', 'HH:mm'), moment('11:59', 'HH:mm')],
+                            }}
+                            format="YYYY-MM-DD HH:mm"
+                            onChange={datepickerChange}
+                            />
+                    </FormItem>
 
                     <FormItem>
                         <Button type="primary" icon="search" onClick={handleSearch}>搜索</Button>
@@ -160,20 +215,15 @@ const Authmenu = ({
             </FormInlineLayout>
 
             <Modal
-                title="新增角色"
+                title="新增菜单"
                 visible={modalShow}
                 onOk={ () => changeModalState(false) }
                 onCancel= { () => changeModalState(false) }
                 footer={null}
                 >
                 <Form>
-                    <FormItem>
-                        <Input placeholder="请输入角色名"/>
-                    </FormItem>
-
-                    <FormItem>
-                        <Button type="primary" onClick={handleSubmit}>提交</Button>
-                    </FormItem>
+                    <VaildForm submitForm={submitForm}>
+                    </VaildForm>
                 </Form>
             </Modal>
 

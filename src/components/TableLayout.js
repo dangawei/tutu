@@ -145,12 +145,9 @@ class TableLayout extends Component {
 				}
 
 				<Table
-					bordered
-					size="small"
 					dataSource={dataSource}
 					rowKey={(record, index) => index}
-					scroll={{x: this.state.scrollX || false, y: scrollY || false}}
-					pagination={false}>
+					scroll={{x: this.state.scrollX || false, y: scrollY || false}}>
 					{
 						allColumns.map(item => this.renderColumn(item))
 					}

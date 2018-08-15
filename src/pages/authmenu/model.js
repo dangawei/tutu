@@ -6,27 +6,31 @@ export default {
 
 	state: {
 		tableData: [],
-		account: '',
+		startTime: '',
+		endTime: '',
 		modalShow: false
 	},
 
 	subscriptions: {
 		setup({ dispatch, history }) {	
-			// dispatch({ 
-			// 	type: 'getMenu',
-			// 	payload: ''
-			// });
+			dispatch({ 
+				type: 'getMenu',
+				payload: {
+					pageNum: 1,
+					pageSize: 10
+				}
+			});
 		},
 	},
 
 	effects: {
 		*getMenu({ payload }, { call, put }) {
-            const res = yield call(api.getMenu, payload);
+			const res = yield call(api.getMenu, payload);
 			if (res.data.code == 0) {
 				yield put({
 					type: 'save', 
 					payload: {
-						tableData: (res.data) ? res.data.data : []
+						tableData: (res.data.data) ? res.data.data.data : []
 					}
 				})
 			} else {
@@ -68,7 +72,17 @@ export default {
 					modalShow: payload
 				}
 			})
-		}
+		},
+
+		*settime({ payload }, { put }) {
+			yield put({
+				type: 'save',
+				payload: {
+					startTime: payload.startTime,
+					endTime: payload.endTime
+				}
+			})
+		},
 	},
 
 	reducers: {

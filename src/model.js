@@ -5,6 +5,7 @@ import { routes } from './configs/pages';
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import api_login from '@/pages/others/login/service';
+import api_role from '@/pages/role/service';
 
 function getMenuList() {
 	return new Promise((resolve, reject) => {
@@ -45,15 +46,20 @@ export default {
 	effects: {
 		// 获取所有导航
 		*fetch({ payload }, { call, put, select }) {
-			// const datalist = yield call(api_login.getLeftMenu, { username: localStorage.getItem('USER_CNAME')});
-			// console.log(datalist);
+			const res = yield call(api_role.menusRole);
+			let authMenu = [];
+			if (res.data.code == 0) {
+                authMenu = res.data.data;
+			} else {
+				message.error('获取权限菜单失败!');
+			}
 			const datalist = yield call(getMenuList);
 			let { dataIndex, dataSubindex } = yield select(state => state.app);
 			yield put({
 				type: 'save',
 				payload: {
 					datalist: datalist,
-					siderList: datalist,
+					siderList: datalist.concat(authMenu),
 				}
 			});
 		},

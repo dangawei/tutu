@@ -26,12 +26,7 @@ const Routers = ({
 			path: '/dftt/dftt-zq/apprentice-quality',
 			component: () => require('../pages/dftt/dftt-zq/apprentice-quality/index'),
 			models: () => [require('../pages/dftt/dftt-zq/apprentice-quality/model')]
-		},
-		{
-			path: '/dftt/dftt-zq/activity',
-			component: () => require('../pages/dftt/dftt-zq/activity/index'),
-			models: () => [require('../pages/dftt/dftt-zq/activity/model')]
-		},
+		}
 	]
 
 	return (
