@@ -47,10 +47,17 @@ export default {
 			}
 		},
 
-		*deleteMenu({ payload }, { call }) {
+		*deleteMenu({ payload }, { call, select, put }) {
+			const { tableData } = yield select(state => state.authmenu);
 			const res = yield call(api.deleteMenu, payload);
 			if (res.data.code == 0) {
 				message.success(res.data.message);
+				yield put({
+					type: 'save',
+					payload: {
+						tableData: tableData.filter(e => e.id !== payload)
+					}
+				})
 			} else {
 				message.error(res.data.message);
 			}

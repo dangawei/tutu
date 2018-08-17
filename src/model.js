@@ -1,11 +1,12 @@
 // import { fromJS, toJS } from 'immutable';
 
-import layoutConfig from './configs/layout';
+import axios from 'axios';
 import { routes } from './configs/pages';
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import api_login from '@/pages/others/login/service';
 import api_role from '@/pages/role/service';
+import layoutConfig from '@/configs/layout';
 
 function getMenuList() {
 	return new Promise((resolve, reject) => {
@@ -33,7 +34,7 @@ export default {
 
 	subscriptions: {
 		setup({ dispatch, history }) {
-			dispatch({ type: 'fetch' });
+			dispatch({ type: 'app/fetch' })
 			return history.listen(({ pathname }) => {
 				dispatch({
 					type: 'renderBread',
@@ -50,8 +51,6 @@ export default {
 			let authMenu = [];
 			if (res.data.code == 0) {
                 authMenu = res.data.data;
-			} else {
-				message.error('获取权限菜单失败!');
 			}
 			const datalist = yield call(getMenuList);
 			let { dataIndex, dataSubindex } = yield select(state => state.app);
@@ -130,6 +129,10 @@ export default {
 				localStorage.removeItem('token');
 				localStorage.removeItem('account');
 				localStorage.removeItem('HAS_LOGIN');
+				axios.defaults.headers = {
+					'token': '',
+					'Content-Type': 'application/json'
+				}
 				yield put(routerRedux.push('/login'))
 			} else {
 				message.error('退出登录失败');

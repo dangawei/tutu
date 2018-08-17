@@ -114,11 +114,11 @@ const App = ({
 
 	// 删除历史导航 只剩一个不能关闭
 	const tabEdit = (targetKey, action) => {
-		if (action === 'remove' && targetKey && historyList.length > 1) {
+		if (action === 'remove' && targetKey) {
 			// 如果关闭当前则跳转到剩余第一个
-			if(targetKey === pathname) {
-				dispatch(routerRedux.push(historyList[0].key === pathname ? historyList[1].key : historyList[0].key))
-			}
+			// if(targetKey === pathname) {
+			// 	dispatch(routerRedux.push(historyList[0].key === pathname ? historyList[1].key : historyList[0].key))
+			// }
 			dispatch({
 				type: 'app/historyNavsRemove',
 				payload: {

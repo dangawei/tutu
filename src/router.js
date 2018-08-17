@@ -42,6 +42,11 @@ const Routers = ({
 			path: '/system/logs/deleteLogs',
 			component: () => import(/* webpackChunkName: "deleteLogs" */ './pages/systemManage/logManage/deleteLog/index'),
 			models: () => [import(/* webpackChunkName: "deleteLogs" */ './pages/systemManage/logManage/deleteLog/model')]
+		},
+		{
+			path: '/teachingManage',
+			component: () => import(/* webpackChunkName: "teachingManage" */ './pages/teachingManage/index'),
+			models: () => [import(/* webpackChunkName: "teachingManage" */ './pages/teachingManage/model')]
 		}
 	]
 

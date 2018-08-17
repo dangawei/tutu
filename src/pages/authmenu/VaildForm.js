@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Form, Input, Row, Col, Checkbox, Button, Radio, message } from 'antd';
+import { formItemLayout } from '@/configs/layout';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
@@ -9,18 +10,6 @@ const ValidForm = ({
 }) => {
     let { form } = props;
     const { getFieldDecorator, validateFieldsAndScroll, resetFields } = form;
-    
-    // 表单布局
-    const formItemLayout = {
-        labelCol: {
-            xs: { span: 14 },
-            sm: { span: 6 },
-        },
-        wrapperCol: {
-            xs: { span: 24 },
-            sm: { span: 16 },
-        }
-    };
 
     // 提交表单
     const handleSubmit = (e) => {

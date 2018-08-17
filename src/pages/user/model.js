@@ -50,10 +50,17 @@ export default {
 			}
 		},
 
-		*deleteUser({ payload }, { call }) {
+		*deleteUser({ payload }, { call, select, put }) {
+			const { tableData } = yield select(state => state.userSetting);
 			const res = yield call(api.deleteUser, payload);
 			if (res.data.code == 0) {
 				message.success(res.data.message);
+				yield put({
+					type: 'save',
+					payload: {
+						tableData: tableData.filter(e => e.id !== payload)
+					}
+				})
 			} else {
 				message.error(res.data.message);
 			}

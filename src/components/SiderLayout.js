@@ -13,30 +13,40 @@ const SiderLayout = ({
 }) => {
 
 	const renderMenu = (item, showIcon) => {
-
 		if(item.children && item.children.length) {
 			let ico = (item.icon && item.icon !== 'tongji') ? item.icon: 'bars'
-			return (
-				<SubMenu 
-					key={item.id}
-					title={
-						<span>
-							<Icon type={ico} />
-							<span>{item.name}</span>
-						</span>
-					}>
-					{
-						item.children.map(sub => renderMenu(sub, false))
-					}
-				</SubMenu>
-			)
+			let arr = item.children.map(e => e.level)
+			let path = (item.modelpage) ? item.modelpage : item.id
+			return (arr && arr[0] < 2) 
+				? (
+					<SubMenu 
+						key={item.id}
+						title={
+							<span>
+								<Icon type={ico} />
+								<span>{item.name}</span>
+							</span>
+						}>
+						{
+							item.children.map(sub => renderMenu(sub, false))
+						}
+					</SubMenu>
+				)
+				: (
+				    <Menu.Item key={path} title={item.name}>
+						{ico && <Icon type={ico} />}
+						<span>{item.name}</span>
+					</Menu.Item>
+				)
 		} else {
 			let _ico = (item.icon && item.icon !== 'tongji') ? item.icon : ''
 			let _path = (item.modelpage) ? item.modelpage : item.id
-			return <Menu.Item key={_path} title={item.name}>
+			return (item.level && item.level == 2) ? null : (
+				   <Menu.Item key={_path} title={item.name}>
 						{_ico && <Icon type={_ico} />}
 						<span>{item.name}</span>
 					</Menu.Item>
+			)
 		}
 	}
 
@@ -51,12 +61,6 @@ const SiderLayout = ({
 				<div className="header-logo">
 					<span>图图英语</span>
 				</div>
-				{/* <Dropdown overlay={menu}>
-					<div className="header-dropdown">
-					    {firstMenuText || '全部项目'}
-						<Icon type="down" />
-					</div>
-				</Dropdown> */}
 			</div>
 			<div className="sider-scroller scrollbar">
 				<Menu

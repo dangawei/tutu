@@ -4,15 +4,16 @@ import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
 import PaginationLayout from '@/components/PaginationLayout';
 
-import { Form, Input, Button, Popconfirm, Modal, notification, Icon } from 'antd';
+import { Form, Input, Button, Popconfirm, Modal, notification, Icon, Tree, Popover, Divider } from 'antd';
 const FormItem = Form.Item;
+const TreeNode = Tree.TreeNode;
 
 const RoleSetting = ({
     roleSetting,
     ...props
 }) => {
     let { dispatch, form } = props;
-    let { tableData, modalShow, account } = roleSetting;
+    let { tableData, modalShow, account, siderList, menuIds } = roleSetting;
     let { getFieldDecorator, getFieldValue } = form;
 
     const columns = [
@@ -29,7 +30,25 @@ const RoleSetting = ({
             dataIndex: 'action',
             render: (txt, record, index) => {
                 return <span>
-                    <Button type="primary" size="small" onClick={() => handleGetmenu(record)}>授权</Button>
+                    <Popover placement="left"
+                        title={'授权菜单'} 
+                        content={
+                            <div>
+                                <Tree
+                                    checkable
+                                    onCheck={checkTree}
+                                >
+                                    {
+                                        siderList.map(item => renderTree(item))
+                                    }
+                                </Tree>
+
+                                <a onClick={() => rolesetAuthority(record)} style={{ margin: 5 }}>确认授权</a>
+                            </div>
+                        } 
+                        trigger="click">
+                        <Button type="primary" size="small">授权</Button>
+                    </Popover>
                     <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record)}>
                         <Button type="danger" size="small" style={{ marginLeft: 10 }}>删除</Button>
                     </Popconfirm>
@@ -37,6 +56,30 @@ const RoleSetting = ({
             }
         }
     ]
+
+    // 渲染权限树列表
+	const renderTree = item => {
+		if (item.children && item.children.length) {
+            return (
+				<TreeNode title={item.name} key={item.id}>
+					{
+						item.children.map(subitem => renderTree(subitem))
+					}
+				</TreeNode>
+			)
+		} else {
+			return <TreeNode title={item.name} key={item.id} />
+		}
+    }
+    
+    // 点击权限数
+    const checkTree = (checkedKeys, e) => {
+        let menuIds = checkedKeys.map(e => e - 0);
+        dispatch({
+        	type: 'roleSetting/setMenuids',
+        	payload: menuIds
+        })
+    }
     
     /**
      * 删除角色
@@ -46,6 +89,20 @@ const RoleSetting = ({
         dispatch({
     		type: 'roleSetting/deleteRole',
     		payload: param.id
+    	})
+    }
+
+    /**
+     * 给角色授权
+     * @param  {object} 列数据
+     */
+    const rolesetAuthority = (param) => {
+        dispatch({
+    		type: 'roleSetting/setauthRole',
+    		payload: {
+                menuIds: menuIds,
+                roleId: param.id
+            }
     	})
     }
 
@@ -71,16 +128,6 @@ const RoleSetting = ({
         	type: 'roleSetting/addRole',
         	payload: getFieldValue('rolename')
         })
-    }
-
-    // 权限菜单
-    const handleGetmenu = () => {
-    	notification.open({
-            message: '功能开发中！',
-            description: '请等待后续开发。',
-            duration: 1,
-            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
-        });
     }
     
     // 展示modal
