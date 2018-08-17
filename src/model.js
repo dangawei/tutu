@@ -129,10 +129,7 @@ export default {
 				localStorage.removeItem('token');
 				localStorage.removeItem('account');
 				localStorage.removeItem('HAS_LOGIN');
-				axios.defaults.headers = {
-					'token': '',
-					'Content-Type': 'application/json'
-				}
+				axios.defaults.headers = { 'token': '' };
 				yield put(routerRedux.push('/login'))
 			} else {
 				message.error('退出登录失败');

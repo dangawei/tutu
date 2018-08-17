@@ -37,10 +37,7 @@ export default {
 				localStorage.setItem('HAS_LOGIN', true);
 				message.success('token is -->' + res.data.data.token);
 				// yield put({type: 'save', payload});
-				axios.defaults.headers = {
-					'token': res.data.data.token,
-					'Content-Type': 'application/json'
-				}
+				axios.defaults.headers = { 'token': res.data.data.token }
 				yield put(routerRedux.push('/'));
 			} else {
 				message.error(res.data.message);
@@ -52,10 +49,7 @@ export default {
             localStorage.removeItem('token');
             localStorage.removeItem('account');
 			localStorage.removeItem('HAS_LOGIN', false);
-			axios.defaults.headers = {
-				'token': '',
-				'Content-Type': 'application/json'
-			}
+			axios.defaults.headers = { 'token': '' }
 		}
 	},
 

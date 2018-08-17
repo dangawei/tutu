@@ -1,6 +1,6 @@
-# datacenter-antd
+# TUTU-Admin
 
-数据中心（DC） - AntDesign重构版本。
+图图教育。
 
 [![React](https://img.shields.io/badge/react-^16.2.0-brightgreen.svg?style=flat-square)](https://github.com/facebook/react)
 [![Ant Design](https://img.shields.io/badge/ant--design-^3.2.2-yellowgreen.svg?style=flat-square)](https://github.com/ant-design/ant-design)

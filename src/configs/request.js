@@ -1,6 +1,7 @@
 import jsonp from '@/utils/jsonp';
 import axios from 'axios';
 import qs from 'qs';
+import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 
 const DEFAULT_TIMEOUT = 15000;
@@ -16,6 +17,22 @@ axios.defaults.headers = {
 	'Content-Type': 'application/json'
 }
 
+// 返回状态拦截器
+axios.interceptors.response.use(res => {
+	let code = res.data.code
+	let msg = res.data.msg
+	switch (code) {
+		case 45:
+			message.error(msg);
+			routerRedux.push('/login');
+			break;
+		case 0:
+		    return res;
+		default:
+			return res;
+	}
+});
+
 // axios.defaults.transformRequest = [function (data, headers) {
 // 	return qs.stringify(data);
 // }]
@@ -25,7 +42,6 @@ axios.defaults.headers = {
 // }
 
 export const BASIC_URL = '//api.admin.chengxuyuantoutiao.com/';
-//export const BASIC_URL = '//123.59.85.60/reportsapi';
 
 /**
  * jsonp方法
