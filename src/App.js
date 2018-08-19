@@ -45,18 +45,6 @@ const App = ({
 		}
 	}
 
-	// 一级菜单切换
-	// const changeTopMenu = e => {
-	// 	let { dataindex, datasubindex } = e.item.props;
-	// 	dispatch({
-	// 		type: 'app/change',
-	// 		payload: {
-	// 			dataIndex: dataindex,
-	// 			dataSubindex: datasubindex
-	// 		}
-	// 	})
-	// }
-
 	// 展开收缩菜单
 	const handleCollapse = () => {
 		dispatch({ type: 'app/collapse' })
@@ -70,17 +58,6 @@ const App = ({
 				dispatch({ type: 'app/loginout' })
 				break;
 			case 'setting':
-			    // window.location.href = 'http://123.59.85.60/dc3.0-auth/#/login'
-				// if(pathname !== '/authority') {
-				// 	window.location.href = 'http://123.59.85.60/dc3.0-auth/#/login'
-				// }
-				// dispatch({
-				// 	type: 'app/historyNavsAdd',
-				// 	payload: {
-				// 		tab: '权限配置',
-				// 		key: '/authority'
-				// 	}
-				// })
 				break;
 		}
 	}

@@ -1,7 +1,7 @@
 import BreadcrumbLayout from './BreadcrumbLayout';
 
 
-import { Layout, Menu, Icon, Tooltip } from 'antd';
+import { Layout, Menu, Icon, Tooltip, Avatar } from 'antd';
 const { SubMenu } = Menu;
 const { Header } = Layout;
 
@@ -42,11 +42,19 @@ const HeaderLayout = ({
 					<Icon type={"bell"} />
 				</div>
 
+				<div className="header-icon header-msg">
+					<Avatar 
+					    icon="user"
+					    style={{ backgroundColor: '#ffbf00', verticalAlign: 'middle' }} 
+					    src='//web.chengxuyuantoutiao.com/static/tutu_logo.png'>
+					</Avatar>
+				</div>
+
 				<Menu 
 					mode="horizontal"
 					className="header-menu header-btns"
 					onSelect={handleUser}>
-					<SubMenu title={<span><Icon type="user" /><em>{ localStorage.getItem('account') || 'admin' }</em></span>}>
+					<SubMenu title={<span><em>{ localStorage.getItem('account') || 'admin' }</em></span>}>
 						<Menu.Item key="setting">修改配置</Menu.Item>
 						<Menu.Item key="logout">退出</Menu.Item>
 					</SubMenu>

@@ -29,18 +29,17 @@ export default {
 		breadCrumd: {},      // 面包屑
 		historyList: [],     // 历史导航
 		redirectUrl: '/',    // 登录后跳转页面
-		firstMenuText: ''
 	},
 
 	subscriptions: {
 		setup({ dispatch, history }) {
 			dispatch({ type: 'app/fetch' })
-			return history.listen(({ pathname }) => {
-				dispatch({
-					type: 'renderBread',
-					payload: pathname
-				})
-			});
+			// return history.listen(({ pathname }) => {
+			// 	dispatch({
+			// 		type: 'renderBread',
+			// 		payload: pathname
+			// 	})
+			// });
 		},
 	},
 
@@ -48,9 +47,12 @@ export default {
 		// 获取所有导航
 		*fetch({ payload }, { call, put, select }) {
 			const res = yield call(api_role.menusRole);
+			console.log('res:::', res);
 			let authMenu = [];
-			if (res.data.code == 0) {
+			if (res && res.data.code == 0) {
                 authMenu = res.data.data;
+			} else {
+                yield put(routerRedux.push('/login'));
 			}
 			const datalist = yield call(getMenuList);
 			let { dataIndex, dataSubindex } = yield select(state => state.app);
@@ -124,13 +126,12 @@ export default {
 		// 退出登录
 		*loginout({}, { call, put }) {
 			const res = yield call(api_login.logout);
-			console.log('logout:::', res.data);
 			if (res.data.code == 0) {
 				localStorage.removeItem('token');
 				localStorage.removeItem('account');
 				localStorage.removeItem('HAS_LOGIN');
 				axios.defaults.headers = { 'token': '' };
-				yield put(routerRedux.push('/login'))
+				yield put(routerRedux.push('/login'));
 			} else {
 				message.error('退出登录失败');
 			}
@@ -179,27 +180,6 @@ export default {
 					historyList: his.filter(e => e.key !== payload.targetKey)
 				}
 			})
-		},
-
-		// 一级菜单下拉切换
-		*firstMenuChange({ payload }, { select, put }) {
-			const datalist = yield select(state => state.app.datalist);
-			const d = datalist[0].children[0].children;
-			let siderList;
-			if (payload.key === 'all') {
-				siderList = d;
-			} else if (payload.key === 'dftt') {
-				siderList = d.slice(0, d.length - 1);
-			} else if (payload.key === 'mop') {
-				siderList = d.slice(-1);
-			}
-			yield put({
-				type: 'save',
-				payload: {
-					siderList,
-					firstMenuText: payload.item.props.children
-				}
-			});
 		}
 	},
 

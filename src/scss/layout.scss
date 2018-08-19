@@ -35,6 +35,10 @@
 	&.ant-layout-header {
 		background: #fff;
 	}
+	.ant-menu-submenu-title {
+		padding-left: 10px;
+		padding-right: 20px;
+	}
 	.header-left,
 	.header-right {
 		display: flex;
@@ -45,9 +49,6 @@
 	}
 	.header-toggle {
 		display: none;
-	}
-	.header-filter {
-		// display: none;
 	}
 	.main-breadcrumb {
 		margin-left: 15px;

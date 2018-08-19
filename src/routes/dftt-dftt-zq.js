@@ -18,11 +18,6 @@ const Routers = ({
 			models: () => [require('../pages/dftt/dftt-zq/task/model')]
 		},
 		{
-			path: '/dftt/dftt-zq/push',
-			component: () => require('../pages/dftt/dftt-zq/push/index'),
-			models: () => [require('../pages/dftt/dftt-zq/push/model')]
-		},
-		{
 			path: '/dftt/dftt-zq/apprentice-quality',
 			component: () => require('../pages/dftt/dftt-zq/apprentice-quality/index'),
 			models: () => [require('../pages/dftt/dftt-zq/apprentice-quality/model')]

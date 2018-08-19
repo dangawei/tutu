@@ -5,8 +5,6 @@
  * @return {[type]}                   [description]
  */
 
-import EditorLayout from '@/components/EditorLayout';
-import TimelineLayout from '@/components/TimelineLayout';
 
 const ReportDescPanel = ({
 	...props
@@ -14,9 +12,7 @@ const ReportDescPanel = ({
 	let { dispatch } = props;
 	return (
 		<div className="report-panel">
-		    <TimelineLayout/>
-
-            <EditorLayout/>
+		    
 		</div>
 	)
 }
