@@ -15,11 +15,8 @@ export default {
 		setup({ dispatch, history }) {
 			dispatch({ type: 'clearStorage' });
 			return history.listen(({ pathname }) => {
-				if (pathname === '/loign') {
-					dispatch({
-						type: 'app/fetch',
-						payload: pathname
-					})
+				if (pathname === '/' || pathname === '/userSetting' || pathname === '/login') {
+					dispatch({ type: 'app/fetch' })
 				}
 			});
 		},
@@ -31,7 +28,7 @@ export default {
 				account: payload.username,
 				password: payload.password
 			});
-			if (res.data.code == 0) {
+			if (res) {
 				localStorage.setItem('token', res.data.data.token);
 				localStorage.setItem('account', res.data.data.account);
 				localStorage.setItem('HAS_LOGIN', true);
@@ -39,8 +36,6 @@ export default {
 				// yield put({type: 'save', payload});
 				axios.defaults.headers = { 'token': res.data.data.token }
 				yield put(routerRedux.push('/'));
-			} else {
-				message.error(res.data.message);
 			}
 		},
 		

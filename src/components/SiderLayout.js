@@ -17,7 +17,7 @@ const SiderLayout = ({
 			let ico = (item.icon && item.icon !== 'tongji') ? item.icon: 'bars'
 			let arr = item.children.map(e => e.level)
 			let path = (item.modelpage) ? item.modelpage : item.id
-			return (arr && arr[0] < 2) 
+			return ((arr && arr[0] < 2) || !arr[0])
 				? (
 					<SubMenu 
 						key={item.id}

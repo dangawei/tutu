@@ -47,7 +47,7 @@ const RoleSetting = ({
                             </div>
                         } 
                         trigger="click">
-                        <Button type="primary" size="small">授权</Button>
+                        <Button type="primary" size="small" onClick={getSiderData}>授权</Button>
                     </Popover>
                     <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record)}>
                         <Button type="danger" size="small" style={{ marginLeft: 10 }}>删除</Button>
@@ -76,8 +76,17 @@ const RoleSetting = ({
     const checkTree = (checkedKeys, e) => {
         let menuIds = checkedKeys.map(e => e - 0);
         dispatch({
-        	type: 'roleSetting/setMenuids',
-        	payload: menuIds
+        	type: 'roleSetting/setParam',
+        	payload: {
+                menuIds
+            }
+        })
+    }
+
+    // 获取左侧菜单数据
+    const getSiderData = () => {
+        dispatch({
+            type: 'roleSetting/getSliderBar'
         })
     }
     
@@ -109,8 +118,10 @@ const RoleSetting = ({
     // 输入角色名
     const handleInput = (e) => {
         dispatch({
-    		type: 'roleSetting/setaccount',
-    		payload: e.target.value
+    		type: 'roleSetting/setParam',
+    		payload: {
+                account: e.target.value
+            }
     	})
     }
 
@@ -133,8 +144,10 @@ const RoleSetting = ({
     // 展示modal
     const changeModalState = (show) => {
         dispatch({
-        	type: 'roleSetting/changeModal',
-        	payload: show
+        	type: 'roleSetting/setParam',
+        	payload: {
+                modalShow: show
+            }
         })
     }
    

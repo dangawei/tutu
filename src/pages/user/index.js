@@ -189,15 +189,17 @@ const UserSetting = ({
     // 输入用户名
     const handleInput = (e) => {
         dispatch({
-    		type: 'userSetting/setaccount',
-    		payload: e.target.value
+    		type: 'userSetting/setParam',
+    		payload: {
+                account: e.target.value
+            }
     	})
     }
     
     // 选择时间框
     const datepickerChange = (d, t) => {
         dispatch({
-        	type: 'userSetting/settime',
+        	type: 'userSetting/setParam',
         	payload: {
                 startTime: t[0] + ':00',
                 endTime: t[1] + ':00'
@@ -223,8 +225,10 @@ const UserSetting = ({
     // 展示modal
     const changeModalState = (show) => {
         dispatch({
-        	type: 'userSetting/changeModal',
-        	payload: show
+        	type: 'userSetting/setParam',
+        	payload: {
+                modalShow: show
+            }
         })
     }
 

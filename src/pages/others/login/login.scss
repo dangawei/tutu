@@ -1,10 +1,9 @@
-
 body {
-    background: #FFF8D7; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#FFF8D7, #FFFAF4); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#FFF8D7, #FFFAF4); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#FFF8D7, #FFFAF4); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#FFF8D7, #FFFAF4); /* Standard syntax */
+    background: #FFF8D7;
+    background: -webkit-linear-gradient(#FFF8D7, #FFFAF4);
+    background: -o-linear-gradient(#FFF8D7, #FFFAF4);
+    background: -moz-linear-gradient(#FFF8D7, #FFFAF4);
+    background: linear-gradient(#FFF8D7, #FFFAF4);
 }
 .form {
 	position: absolute;

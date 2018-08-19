@@ -26,7 +26,7 @@ module.exports = {
 		},
 		{
 			name: '角色管理',
-			icon: 'user',
+			icon: 'user-add',
 			modelpage: '/roleSetting',
 			id: 4
 		},
@@ -48,6 +48,12 @@ module.exports = {
 			modelpage: '/teachingManage',
 			id: 400
 		},
+		{
+			name: 'App版本控制',
+			icon: 'reload',
+			modelpage: '/appverUpdate',
+			id: 500
+		}
 		// {
 		// 	name: '系统管理',
 		// 	icon: 'appstore-o',

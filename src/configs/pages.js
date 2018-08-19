@@ -14,15 +14,15 @@ module.exports = {
 	redirectRoutes: [
 		{
 			from: '/',
-			to: '/dftt/dftt-zq/task'
+			to: '/userSetting'
 		},
-		{
-			from: '/dftt',
-			to: '/dftt/dftt-zq/task'
-		},
-		{
-			from: '/dftt/dftt-zq',
-			to: '/dftt/dftt-zq/task'
-		},
+		// {
+		// 	from: '/dftt',
+		// 	to: '/dftt/dftt-zq/task'
+		// },
+		// {
+		// 	from: '/dftt/dftt-zq',
+		// 	to: '/dftt/dftt-zq/task'
+		// },
 	]
 }

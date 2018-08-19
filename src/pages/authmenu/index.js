@@ -7,7 +7,7 @@ import TablePopoverLayout from '@/components/TablePopoverLayout';
 import VaildForm from './VaildForm';
 import { filterObj } from '@/utils/tools';
 
-import { Form, Input, Button, Popconfirm, Modal, notification, Icon, DatePicker } from 'antd';
+import { Form, Button, Popconfirm, Modal, Icon, DatePicker, Badge } from 'antd';
 import moment from 'moment';
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -16,7 +16,7 @@ const Authmenu = ({
     authmenu,
     ...props
 }) => {
-    let { dispatch, form } = props;
+    let { dispatch } = props;
     let { tableData, modalShow, startTime, endTime } = authmenu;
 
     const columns = [
@@ -71,21 +71,17 @@ const Authmenu = ({
         }, {
         	title: '菜单状态',
         	dataIndex: 'status',
-            sorter: true,
-            render: (text, record) =>
-				<TablePopoverLayout
-					title={'修改菜单状态'}
-					valueData={text || '无'}
-					defaultValue={text || '无'}
-					onOk={v => 
-						dispatch({
-							type: 'authmenu/updateMenu',
-							payload: {
-								id: record.id,
-								status: v
-							}
-						})
-					}/>
+			sorter: true,
+			render: (txt) => {
+				switch (txt) {
+					case 1:
+						return <Badge status="processing" text="正常"/>;	
+					case 2:
+						return <Badge status="warning" text="不可用"/>;
+					default:
+					    return <Badge status="warning" text="删除"/>;
+				}
+			}
         }, {
         	title: 'url',
         	dataIndex: 'url',
@@ -156,15 +152,17 @@ const Authmenu = ({
     // 展示modal
     const changeModalState = (show) => {
         dispatch({
-        	type: 'authmenu/changeModal',
-        	payload: show
+        	type: 'authmenu/setParam',
+        	payload: {
+				modalShow: show
+			}
         })
     }
 
     // 选择时间框
     const datepickerChange = (d, t) => {
         dispatch({
-        	type: 'authmenu/settime',
+        	type: 'authmenu/setParam',
         	payload: {
                 startTime: t[0] + ':00',
                 endTime: t[1] + ':00'

@@ -13,11 +13,7 @@ export default {
 	effects: {
 		*upload({ payload }, { call }) {
             const res = yield call(api.upload, payload);
-            if (res.data.code == 0) {
-            	message.success(res.data.message);
-            } else {
-            	message.error(res.data.message);
-            }
+            message.success(res.data.message);
 		}
 	},
 

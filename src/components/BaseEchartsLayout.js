@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
-import echarts from 'echarts';
 import ReactEcharts from 'echarts-for-react';
-import macarons from '@/configs/theme/macarons.js';
-echarts.registerTheme('macarons', macarons);
 
 const BaseEchartsLayout = ({
     options,
@@ -65,7 +62,6 @@ const BaseEchartsLayout = ({
         <div className="chart-panel">
             <ReactEcharts
                className="echarts-container"
-               theme={"macarons"}
                option={getOptions()}
             />
         </div>

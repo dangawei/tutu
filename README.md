@@ -52,26 +52,6 @@
 └── .webpack.config.js
 ```
 
-#### 生成对应路由的文件
-
-> 配置 src/configs/pages.js中的routes
-
-```bash
-node renderFile.js
-批量生成目录文件，已存在的不会覆盖
-```
-
-```bash
-node renderFile.js --file=/songheng/product/dftt-zq/test,/songheng/product/dftt-zq/test2
-单独生成文件不会遍历已存在的routes，多个路由使用,分割
-```
-
-```bash
-node genRoutes.js
-遍历所有routes配置 分版块生成路由配置
-```
-
-
 #### 目录说明
 - .webpackrc配置文件[参考配置](https://github.com/sorrycc/roadhog/blob/master/README_zh-cn.md)
 - .roadhogrc.mock.js 模拟接口数据文件

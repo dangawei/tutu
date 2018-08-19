@@ -47,6 +47,11 @@ const Routers = ({
 			path: '/teachingManage',
 			component: () => import(/* webpackChunkName: "teachingManage" */ './pages/teachingManage/index'),
 			models: () => [import(/* webpackChunkName: "teachingManage" */ './pages/teachingManage/model')]
+		},
+		{
+			path: '/appverUpdate',
+			component: () => import(/* webpackChunkName: "appverUpdate" */ './pages/appUpdate/index'),
+			models: () => [import(/* webpackChunkName: "appverUpdate" */ './pages/appUpdate/model')]
 		}
 	]
 
@@ -63,9 +68,7 @@ const Routers = ({
 								/>
 							))
 						}
-						<Redirect exact from='/'  to='/userSetting' />
-						{/* <Redirect exact from='/dftt'  to='/dftt/dftt-zq/task' />
-						<Redirect exact from='/dftt/dftt-zq'  to='/dftt/dftt-zq/task' /> */}
+						<Redirect exact from='/'  to='/userSetting'/>
 						
 					</Switch>
 				</App>

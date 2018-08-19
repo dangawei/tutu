@@ -153,10 +153,9 @@ const TeachingManage = ({
     // 展示modal
     const changeModalState = (flag, show) => {
         dispatch({
-        	type: 'teachingmanage/changeModal',
+        	type: 'teachingmanage/setParam',
         	payload: {
-                field: flag,
-                showState: show
+                [flag]: show
             }
         })
     }
@@ -164,7 +163,7 @@ const TeachingManage = ({
     // 选择时间框
     const datepickerChange = (d, t) => {
         dispatch({
-        	type: 'teachingmanage/settime',
+        	type: 'teachingmanage/setParam',
         	payload: {
                 startTime: t[0] + ':00',
                 endTime: t[1] + ':00'
@@ -181,8 +180,10 @@ const TeachingManage = ({
             })
         }
     	dispatch({
-    		type: 'teachingmanage/setActiveKey',
-    		payload: key
+    		type: 'teachingmanage/setParam',
+    		payload: {
+                activeKey: key
+            }
     	})
     }
    
@@ -294,7 +295,6 @@ const TeachingManage = ({
                         <FormItem
                             {...formItemLayout}>
                             <Button type="primary" onClick={handleSubmit} style={{ marginLeft: 75 }}>提交</Button>
-
                             <Button onClick={handleReset} style={{ marginLeft: 15 }}>取消</Button>
                         </FormItem>
                     </Form>

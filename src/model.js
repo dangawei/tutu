@@ -47,15 +47,13 @@ export default {
 		// 获取所有导航
 		*fetch({ payload }, { call, put, select }) {
 			const res = yield call(api_role.menusRole);
-			console.log('res:::', res);
 			let authMenu = [];
-			if (res && res.data.code == 0) {
+			if (res) {
                 authMenu = res.data.data;
 			} else {
                 yield put(routerRedux.push('/login'));
 			}
 			const datalist = yield call(getMenuList);
-			let { dataIndex, dataSubindex } = yield select(state => state.app);
 			yield put({
 				type: 'save',
 				payload: {
@@ -126,14 +124,12 @@ export default {
 		// 退出登录
 		*loginout({}, { call, put }) {
 			const res = yield call(api_login.logout);
-			if (res.data.code == 0) {
+			if (res) {
 				localStorage.removeItem('token');
 				localStorage.removeItem('account');
 				localStorage.removeItem('HAS_LOGIN');
 				axios.defaults.headers = { 'token': '' };
 				yield put(routerRedux.push('/login'));
-			} else {
-				message.error('退出登录失败');
 			}
 		},
 

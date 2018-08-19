@@ -26,70 +26,57 @@ export default {
 	effects: {
 		*getMenu({ payload }, { call, put }) {
 			const res = yield call(api.getMenu, payload);
-			if (res.data.code == 0) {
-				yield put({
-					type: 'save', 
-					payload: {
-						tableData: (res.data.data) ? res.data.data.data : []
-					}
-				})
-			} else {
-				message.error(res.data.message);
-			}
+			yield put({
+				type: 'save',
+				payload: {
+					tableData: (res.data.data) ? res.data.data.data : []
+				}
+			});
 		},
 		
-		*addMenu({ payload }, { call }) {
+		*addMenu({ payload }, { call, put }) {
 			const res = yield call(api.addMenu, payload);
-			if (res.data.code == 0) {
+			if (res) {
 				message.success(res.data.message);
-			} else {
-				message.error(res.data.message);
+				yield put({
+					type: 'getMenu',
+					payload: {
+						pageNum: 1,
+						pageSize: 10
+					}
+				});
 			}
 		},
 
 		*deleteMenu({ payload }, { call, select, put }) {
 			const { tableData } = yield select(state => state.authmenu);
 			const res = yield call(api.deleteMenu, payload);
-			if (res.data.code == 0) {
+			if (res) {
 				message.success(res.data.message);
 				yield put({
 					type: 'save',
 					payload: {
 						tableData: tableData.filter(e => e.id !== payload)
 					}
-				})
-			} else {
-				message.error(res.data.message);
+				});
 			}
 		},
 
 		*updateMenu({ payload }, { call }) {
 			const res = yield call(api.updateMenu, payload);
-			if (res.data.code == 0) {
-				message.success(res.data.message);
-			} else {
-				message.error(res.data.message);
+			res && message.success(res.data.message);
+		},
+
+		*setParam({ payload }, { put }) {
+			for (let key in payload) {
+				yield put({
+					type: 'save',
+					payload: {
+						[key]: payload[key]
+					}
+				})
 			}
-		},
-
-		*changeModal({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					modalShow: payload
-				}
-			})
-		},
-
-		*settime({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					startTime: payload.startTime,
-					endTime: payload.endTime
-				}
-			})
-		},
+		}
 	},
 
 	reducers: {

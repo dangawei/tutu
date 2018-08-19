@@ -30,34 +30,33 @@ export default {
 	effects: {
 		*getBook({ payload }, { call, put }) {
 			const res = yield call(api.getBook, payload);
-            if (res.data.code == 0) {
+            if (res) {
             	yield put({
             		type: 'save',
             		payload: {
             			bookList: (res.data.data) ? res.data.data.data : []
             		}
             	})
-            } else {
-            	message.error(res.data.message);
             }
         },
 
-        *addBook({ payload }, { call }) {
+        *addBook({ payload }, { call, put }) {
             const res = yield call(api.addBook, payload);
-            if (res.data.code == 0) {
-            	message.success(res.data.message);
-            } else {
-            	message.error(res.data.message);
-            }
+			if (res) {
+				message.success(res.data.message);
+				yield put({
+					type: 'getBook',
+					payload: {
+						pageNum: 1,
+						pageSize: 10
+					}
+				});
+			}
         },
 
         *deleteBook({ payload }, { call }) {
             const res = yield call(api.deleteBook, payload);
-            if (res.data.code == 0) {
-            	message.success(res.data.message);
-            } else {
-            	message.error(res.data.message);
-            }
+            res && message.success(res.data.message);
         },
         
         *getGrade({ payload }, { call, put }) {
@@ -74,60 +73,29 @@ export default {
             }
         },
         
-        *addGrade({ payload }, { call }) {
+        *addGrade({ payload }, { call, put }) {
             const res = yield call(api.addGrade, payload);
-            if (res.data.code == 0) {
-            	message.success(res.data.message);
-            } else {
-            	message.error(res.data.message);
-            }
+			if (res) {
+				message.success(res.data.message);
+				yield put({ type: 'getGrade' });
+			}
         },
 
         *updateGrade({ payload }, { call }) {
             const res = yield call(api.updateGrade, payload);
-            if (res.data.code == 0) {
-            	message.success(res.data.message);
-            } else {
-            	message.error(res.data.message);
-            }
-		},
-		
-		*changeModal({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					[payload.field]: payload.showState
-				}
-			})
+            res && message.success(res.data.message);
 		},
 
-		*settime({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					startTime: payload.startTime,
-					endTime: payload.endTime
-				}
-			})
-		},
-
-		*setgradeId({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					gradeId: payload
-				}
-			})
-		},
-
-		*setActiveKey({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					activeKey: payload
-				}
-			})
-		},
+		*setParam({ payload }, { put }) {
+			for (let key in payload) {
+				yield put({
+					type: 'save',
+					payload: {
+						[key]: payload[key]
+					}
+				})
+			}
+		}
 	},
 
 	reducers: {

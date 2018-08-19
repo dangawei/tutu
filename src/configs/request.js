@@ -18,16 +18,17 @@ axios.defaults.headers = {
 // 返回状态拦截器
 axios.interceptors.response.use(res => {
 	let code = res.data.code
-	let msg = res.data.msg
+	let msg = res.data.message
 	switch (code) {
 		case 45:
 			message.error(msg);
 			routerRedux.push('/login');
-			break;
+			return false;
 		case 0:
-		    return res;
-		default:
 			return res;
+		default:
+		    message.error(msg);
+			return false;
 	}
 });
 
@@ -39,7 +40,10 @@ axios.interceptors.response.use(res => {
 // 	return qs.stringify(params);
 // }
 
+// admin端
 export const BASIC_URL = '//api.admin.chengxuyuantoutiao.com/';
+// app端
+export const APP_URL = '//api.app.chengxuyuantoutiao.com/';
 
 /**
  * jsonp方法

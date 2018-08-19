@@ -1,5 +1,4 @@
 import api from './service';
-import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 
 export default {
@@ -28,32 +27,34 @@ export default {
 	effects: {
 		*getUser({ payload }, { call, put }) {
 			const res = yield call(api.getUser, payload);
-			if (res.data.code == 0) {
+			if (res) {
 				yield put({
 					type: 'save', 
 					payload: {
 						tableData: (res.data.data) ? res.data.data.data : []
 					}
 				})
-			} else {
-				message.error(res.data.message);
 			}
 		},
 		
-		*addUser({ payload }, { call }) {
-			console.log('payload::', payload)
+		*addUser({ payload }, { call, put }) {
 			const res = yield call(api.addUser, payload);
-			if (res.data.code == 0) {
+			if (res) {
 				message.success(res.data.message);
-			} else {
-				message.error(res.data.message);
+				yield put({
+					type: 'getUser',
+					payload: {
+						pageNum: 1,
+						pageSize: 10
+					}
+				})
 			}
 		},
 
 		*deleteUser({ payload }, { call, select, put }) {
 			const { tableData } = yield select(state => state.userSetting);
 			const res = yield call(api.deleteUser, payload);
-			if (res.data.code == 0) {
+			if (res) {
 				message.success(res.data.message);
 				yield put({
 					type: 'save',
@@ -61,64 +62,33 @@ export default {
 						tableData: tableData.filter(e => e.id !== payload)
 					}
 				})
-			} else {
-				message.error(res.data.message);
 			}
 		},
 
 		*forbiddenUser({ payload }, { call }) {
 			const res = yield call(api.forbiddenUser, payload);
-			if (res.data.code == 0) {
-				message.success(res.data.message);
-			} else {
-				message.error(res.data.message);
-			}
+			res && message.success(res.data.message);
 		},
 
 		*usingUser({ payload }, { call }) {
 			const res = yield call(api.usingUser, payload);
-			if (res.data.code == 0) {
-				message.success(res.data.message);
-			} else {
-				message.error(res.data.message);
-			}
+			res && message.success(res.data.message);
 		},
 
 		*updateUser({ payload }, { call }) {
 			const res = yield call(api.updateUser, payload);
-			if (res.data.code == 0) {
-				message.success(res.data.message);
-			} else {
-				message.error(res.data.message);
+			res && message.success(res.data.message);
+		},
+
+		*setParam({ payload }, { put }) {
+			for (let key in payload) {
+				yield put({
+					type: 'save',
+					payload: {
+						[key]: payload[key]
+					}
+				})
 			}
-		},
-
-		*setaccount({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					account: payload
-				}
-			})
-		},
-
-		*settime({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					startTime: payload.startTime,
-					endTime: payload.endTime
-				}
-			})
-		},
-
-		*changeModal({ payload }, { put }) {
-			yield put({
-				type: 'save',
-				payload: {
-					modalShow: payload
-				}
-			})
 		}
 	},
 
