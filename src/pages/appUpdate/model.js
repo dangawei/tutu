@@ -69,16 +69,28 @@ export default {
 			}
 		},
 
-		*disableType({ payload }, { call }) {
-			const _API = (payload.type === 'app') ? 'disableApptype' : 'disableVersion';
-            const res = yield call(api[_API], payload.id);
-            res && message.success(res.data.message);
+		*disableType({ payload }, { call, put }) {
+			const { type, id } = payload;
+			const _API = (type === 'app') ? 'disableApptype' : 'disableVersion';
+			const res = yield call(api[_API], id);
+			if (res) {
+				message.success(res.data.message);
+				if (type === 'app') {
+					yield put({ type: 'getAppList' });
+				}
+			}
 		},
 
-		*enableType({ payload }, { call }) {
+		*enableType({ payload }, { call, put }) {
+			const { type, id } = payload;
 			const _API = (payload.type === 'app') ? 'enableApptype' : 'enableVersion';
 			const res = yield call(api[_API], payload.id);
-            res && message.success(res.data.message);
+            if (res) {
+				message.success(res.data.message);
+				if (type === 'app') {
+					yield put({ type: 'getAppList' });
+				}
+			}
 		},
 
 		*addApptype({ payload }, { call, put }) {

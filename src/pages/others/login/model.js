@@ -15,7 +15,7 @@ export default {
 		setup({ dispatch, history }) {
 			dispatch({ type: 'clearStorage' });
 			return history.listen(({ pathname }) => {
-				if (pathname === '/' || pathname === '/userSetting' || pathname === '/login') {
+				if (pathname !== '/login') {
 					dispatch({ type: 'app/fetch' })
 				}
 			});

@@ -33,13 +33,12 @@ export default {
 
 	subscriptions: {
 		setup({ dispatch, history }) {
-			dispatch({ type: 'app/fetch' })
-			// return history.listen(({ pathname }) => {
-			// 	dispatch({
-			// 		type: 'renderBread',
-			// 		payload: pathname
-			// 	})
-			// });
+			const hash = window.location.hash;
+			if (hash && hash !== '#/login') {
+				dispatch({
+					type: 'app/fetch'
+				})
+			}
 		},
 	},
 
