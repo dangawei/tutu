@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
-import { Form, Input, Row, Col, Checkbox, Button, Radio } from 'antd';
+import { Form, Input, Select, Button, Radio } from 'antd';
 import { formItemLayout } from '@/configs/layout';
+import MyUpload from '@/components/UploadComponent';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+const Option = Select.Option;
 
 const ValidForm = ({
     submitForm,
+    uploadSuccess,
+    getRoleList,
+    roleList,
     ...props
 }) => {
     let { form } = props;
@@ -95,6 +100,17 @@ const ValidForm = ({
 
                 <FormItem
                     {...formItemLayout}
+                    label="头像"
+                    >
+                    {getFieldDecorator('avatar', {
+                        rules: [{ message: '请输入上传头像图片!' }],
+                    })(
+                        <MyUpload uploadSuccess={uploadSuccess}></MyUpload>
+                    )}
+                </FormItem>
+
+                <FormItem
+                    {...formItemLayout}
                     label="状态"
                     >
                     {getFieldDecorator('status')(
@@ -111,9 +127,19 @@ const ValidForm = ({
                     label="角色"
                     >
                     {getFieldDecorator('roleid', {
-                        rules: [{ required: false, message: '请输入角色id!' }],
+                        rules: [{ message: '请选择角色!' }],
                     })(
-                        <Input style={{ width: '100%' }} placeholder="请输入角色id"/>
+                        <Select
+                            showSearch
+                            placeholder='请选择角色'
+                            onFocus={getRoleList}
+                            >
+                            {
+                                roleList.map(item =>
+                                    <Option key={item.id} value={item.id}>{item.name}</Option>
+                                )
+                            }
+                        </Select>
                     )}
                 </FormItem>
 
@@ -128,7 +154,10 @@ const ValidForm = ({
 };
 
 ValidForm.propTypes = {
-    submitForm: PropTypes.func // 表单提交
+    submitForm: PropTypes.func, // 表单提交
+    uploadSuccess: PropTypes.func, // 上传成功
+    getRoleList: PropTypes.func,   // 获取角色
+    roleList: PropTypes.array,     // 角色列表
 };
 
 export default (Form.create()(ValidForm));

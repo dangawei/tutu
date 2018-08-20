@@ -12,7 +12,8 @@ export default {
 		startTime: '',
 		endTime: '',
 		appTypeId: '',
-		modalShow: false
+		modalShow: false,
+		apkUrl: '',    // 上传apk包地址
 	},
 
 	subscriptions: {

@@ -30,12 +30,6 @@ module.exports = {
 			modelpage: '/roleSetting',
 			id: 4
 		},
-		// {
-		// 	name: '文件上传',
-		// 	icon: 'upload',
-		// 	modelpage: '/upload',
-		// 	id: 2
-		// },
 		{
 			name: '菜单管理',
 			icon: 'tuisong',

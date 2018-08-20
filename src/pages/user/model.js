@@ -1,15 +1,18 @@
 import api from './service';
 import { message } from 'antd';
+import api_role from '@/pages/role/service';
 
 export default {
 	namespace: 'userSetting',
 
 	state: {
 		tableData: [],
+		roleList: [],
 		startTime: '',
 		endTime: '',
 		account: '',
-		modalShow: false
+		modalShow: false,
+		avatar: '' // 用户头像url
 	},
 
 	subscriptions: {
@@ -20,7 +23,7 @@ export default {
 					pageNum: 1,
 					pageSize: 10
 				}
-			});
+			})
 		},
 	},
 
@@ -32,6 +35,18 @@ export default {
 					type: 'save', 
 					payload: {
 						tableData: (res.data.data) ? res.data.data.data : []
+					}
+				})
+			}
+		},
+
+		*getRoleList({ payload }, { call, put }) {
+			const res = yield call(api_role.getRole, payload);
+			if (res) {
+				yield put({
+					type: 'save',
+					payload: {
+						roleList: (res.data) ? res.data.data : []
 					}
 				})
 			}

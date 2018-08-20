@@ -49,19 +49,6 @@ const ValidForm = ({
 
                 <FormItem
                     {...formItemLayout}
-                    label="菜单id"
-                    >
-                    {getFieldDecorator('id', {
-                        rules: [{
-                            required: true, message: '请输菜单id!',
-                        }],
-                    })(
-                        <Input placeholder="请输菜单id（必须为数字）"/>
-                    )}
-                </FormItem>
-
-                <FormItem
-                    {...formItemLayout}
                     label="父级id"
                     >
                     {getFieldDecorator('parentId', {
@@ -69,7 +56,7 @@ const ValidForm = ({
                             required: true, message: '请输入父级id！（必须为数字）',
                         }],
                     })(
-                        <Input placeholder="一级菜单菜单传0"/>
+                        <Input placeholder="一级菜单传0"/>
                     )}
                 </FormItem>
 
@@ -128,7 +115,7 @@ const ValidForm = ({
                     label="接口地址"
                     >
                     {getFieldDecorator('url', {
-                        rules: [{ required: true, message: '请输入接口地址!' }],
+                        rules: [{ message: '请输入接口地址!' }],
                     })(
                         <Input style={{ width: '100%' }} placeholder="请输入接口地址"/>
                     )}

@@ -4,7 +4,7 @@ import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
 import PaginationLayout from '@/components/PaginationLayout';
 
-import { Form, Input, Button, Popconfirm, Modal, notification, Icon, Tree, Popover, Divider } from 'antd';
+import { Form, Input, Button, Popconfirm, Modal, notification, Icon, Tree, Popover, Divider, message } from 'antd';
 const FormItem = Form.Item;
 const TreeNode = Tree.TreeNode;
 
@@ -47,7 +47,7 @@ const RoleSetting = ({
                             </div>
                         } 
                         trigger="click">
-                        <Button type="primary" size="small" onClick={getSiderData}>授权</Button>
+                        <Button type="primary" size="small" onClick={ getSiderData }>授权</Button>
                     </Popover>
                     <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record)}>
                         <Button type="danger" size="small" style={{ marginLeft: 10 }}>删除</Button>
@@ -61,14 +61,14 @@ const RoleSetting = ({
 	const renderTree = item => {
 		if (item.children && item.children.length) {
             return (
-				<TreeNode title={item.name} key={item.id}>
+				<TreeNode title={item.menuName} key={item.id}>
 					{
 						item.children.map(subitem => renderTree(subitem))
 					}
 				</TreeNode>
 			)
 		} else {
-			return <TreeNode title={item.name} key={item.id} />
+			return <TreeNode title={item.menuName} key={item.id} />
 		}
     }
     
@@ -106,13 +106,15 @@ const RoleSetting = ({
      * @param  {object} 列数据
      */
     const rolesetAuthority = (param) => {
-        dispatch({
-    		type: 'roleSetting/setauthRole',
-    		payload: {
-                menuIds: menuIds,
-                roleId: param.id
-            }
-    	})
+        if (menuIds.length > 0) {
+            dispatch({
+            	type: 'roleSetting/setauthRole',
+            	payload: {
+            		menuIds: menuIds,
+            		roleId: param.id
+            	}
+            })
+        }
     }
 
     // 输入角色名

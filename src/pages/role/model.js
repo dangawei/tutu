@@ -1,4 +1,5 @@
 import api from './service';
+import api_authmenu from '@/pages/authmenu/service';
 import { message } from 'antd';
 
 export default {
@@ -22,14 +23,17 @@ export default {
 	},
 
 	effects: {
-		*getSliderBar({ payload }, { put, select }) {
-			const { siderList } = yield select(state => state.app);
+		*getSliderBar({ payload }, { call, put }) {
+			const res = yield call(api_authmenu.getMenu, {
+				pageNum: 1,
+				pageSize: 10
+			});
 			yield put({
 				type: 'save',
 				payload: {
-					siderList
+					siderList: (res.data.data) ? res.data.data.data : []
 				}
-			})
+			});
 		},
 
 		*getRole({ payload }, { call, put, select }) {

@@ -12,7 +12,8 @@ export default {
         gradeList: [], // 年级数据
 		modalShow: false,
 		modal2Show: false,
-		activeKey: '0'  // 默认书籍
+		activeKey: '0',  // 默认书籍
+		icon: ''         // 书籍封面
 	},
 
 	subscriptions: {

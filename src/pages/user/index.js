@@ -18,7 +18,7 @@ const UserSetting = ({
     ...props
 }) => {
     let { dispatch } = props;
-    let { tableData, account, startTime, endTime, modalShow } = userSetting;
+    let { tableData, account, startTime, endTime, modalShow, avatar, roleList } = userSetting;
     const columns = [
         {
             title: '用户名',
@@ -219,10 +219,26 @@ const UserSetting = ({
 
     // 提交表单
     const submitForm = (userinfo) => {
+        avatar && (userinfo.avatar = avatar);
         dispatch({
         	type: 'userSetting/addUser',
         	payload: filterObj(userinfo)
         })
+    }
+
+    // 上传成功
+    const uploadSuccess = (url) => {
+        dispatch({
+        	type: 'userSetting/setParam',
+        	payload: {
+        		avatar: url
+        	}
+        })
+    }
+
+    // 获取角色列表
+    const getRoleList = () => {
+        dispatch({ type: 'userSetting/getRoleList' })
     }
 
     // 确认密码
@@ -233,18 +249,6 @@ const UserSetting = ({
     // 		callback();
     // 	}
     // }
-   
-    // 表单布局
-    const formItemLayout = {
-        labelCol: {
-            xs: { span: 24 },
-            sm: { span: 8 },
-        },
-        wrapperCol: {
-            xs: { span: 24 },
-            sm: { span: 16 },
-        }
-    };
 
 	return (
 		<div>
@@ -288,70 +292,13 @@ const UserSetting = ({
                 cancelText="取消"
                 footer={null}
                 >
-                <VaildForm submitForm={submitForm}>
+                <VaildForm 
+                    submitForm={submitForm}
+                    uploadSuccess={uploadSuccess}
+                    getRoleList={getRoleList}
+                    roleList={roleList}
+                    >
                 </VaildForm>
-                {/* <Form>
-                    <FormItem
-                        {...formItemLayout}
-                        label="用户名"
-                        >
-                        {getFieldDecorator('name', {
-                            rules: [{ required: true, message: '请输入用户名!', whitespace: true }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="密码"
-                        >
-                        {getFieldDecorator('password', {
-                            rules: [{
-                                required: true, message: '请输入密码!',
-                            }],
-                        })(
-                            <Input type="password" />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="确认密码"
-                        >
-                        {getFieldDecorator('confirm', {
-                            rules: [{
-                               required: true, message: '请再次确认密码!',
-                            }],
-                        })(
-                            <Input type="password" />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="E-mail"
-                        >
-                        {getFieldDecorator('email', {
-                            rules: [{
-                                type: 'email', message: '邮箱格式有误!',
-                            }, {
-                                required: true, message: '请输入邮箱l!',
-                            }],
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="手机号"
-                        >
-                        {getFieldDecorator('phone', {
-                            rules: [{ required: true, message: '请输入手机号!' }],
-                        })(
-                            <Input style={{ width: '100%' }} />
-                        )}
-                    </FormItem>
-                </Form> */}
             </Modal>
 
             <TableLayout

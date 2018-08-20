@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
 import UploadComponent from '@/components/UploadComponent';
+import MyUpload from '@/components/UploadComponent';
 import moment from 'moment';
 
 import { filterObj } from '@/utils/tools';
@@ -20,7 +21,7 @@ const AppverUpdate = ({
 	...props
 }) => {
 	let { dispatch, form } = props;
-	let { appList, verList, activeKey, startTime, endTime, appname, modalShow, appTypeId } = appver;
+	let { appList, verList, activeKey, startTime, endTime, appname, modalShow, appTypeId, apkUrl } = appver;
 	let { getFieldDecorator, validateFieldsAndScroll, resetFields } = form;
 
 	let appColumns = [
@@ -224,6 +225,7 @@ const AppverUpdate = ({
 			if (!err) {
 				values.forceUpdate && (values.forceUpdate = values.forceUpdate - 0);
 				values.updateDescribe && (values.updateDescribe = values.updateDescribe - 0);
+				apkUrl && (values.apkUrl = apkUrl);
 				dispatch({
 					type: 'appver/addVersion',
 					payload: {
@@ -237,6 +239,16 @@ const AppverUpdate = ({
 	// 表单取消
 	const handleReset = () => {
 		resetFields();
+	}
+
+	// 上传文件回调
+	const uploadSuccess = (url) => {
+		dispatch({
+			type: 'appver/setParam',
+			payload: {
+				apkUrl: url
+			}
+		})
 	}
 
 	// 搜索版本信息
@@ -346,17 +358,6 @@ const AppverUpdate = ({
 								)}
 							</FormItem>
 
-							<FormItem
-								label="apk下载地址"
-								{...formItemLayout}
-								>
-								{getFieldDecorator('apkUrl', {
-									rules: [{ required: true, message: '请输下载地址!' }],
-								})(
-									<Input placeholder="请输下载地址"/>
-								)}
-							</FormItem>
-
 							{/*App类型*/}
 							<FormItem 
 							    label="App类型"
@@ -372,6 +373,17 @@ const AppverUpdate = ({
 										)
 									}
 									</Select>
+								)}
+							</FormItem>
+
+							<FormItem
+								label="apk下载地址"
+								{...formItemLayout}
+								>
+								{getFieldDecorator('apkUrl', {
+									rules: [{ message: '请上传apk包!' }],
+								})(
+									<MyUpload uploadSuccess={uploadSuccess}></MyUpload>
 								)}
 							</FormItem>
 

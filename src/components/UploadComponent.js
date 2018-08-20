@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Upload, Icon, message, Button } from 'antd';
+import PropTypes from 'prop-types';
+import { axios } from '@/configs/request';
 
 /**
  * 上传文件组件
@@ -8,39 +9,29 @@ import { Upload, Icon, message, Button } from 'antd';
 class MyUpload extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            fileList: []
-        }
     }
-
-    handleChange = (info) => {
-        let fileList = info.fileList;
-        fileList = fileList.slice(-2);
-
-        fileList = fileList.map((file) => {
-            if (file.response) {
-                file.url = file.response.url;
-            }
-            return file;
-        });
-        fileList = fileList.filter((file) => {
-            if (file.response) {
-                return message.success('上传成功！');
-            }
-            return true;
-        });
-
-        this.setState({ fileList });
+    
+    handleUpload = (file) => {
+        let formData = new FormData();
+        let { uploadSuccess } = this.props
+        formData.append('file', file.fileList[0].originFileObj)
+        axios.post('file/upload', formData)
+            .then(function (res) {
+                if (res.data.code === 0) {
+                    message.success('上传成功！')
+                    uploadSuccess && uploadSuccess(res.data.data)
+                } else {
+                    message.error(res.data.message)
+                }
+            })
+            .catch(function (err) {
+                console.log('上传失败！')
+            });
     }
 
     render() {
-        const props = {
-            action: '//api.admin.chengxuyuantoutiao.com/file/upload',
-            onChange: this.handleChange,
-            multiple: false,  // 批量上传
-        };
         return (
-            <Upload {...props} fileList={this.state.fileList}>
+            <Upload onChange={this.handleUpload}>
                 <Button>
                    <Icon type="upload"/> 上传文件
                 </Button>
@@ -48,5 +39,10 @@ class MyUpload extends Component {
         );
     }
 }
+
+MyUpload.propTypes = {
+	uploadSuccess: PropTypes.func // 过滤列回调
+};
+
 
 export default MyUpload;

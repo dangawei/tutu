@@ -4,6 +4,7 @@ import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
 import PaginationLayout from '@/components/PaginationLayout';
 import TablePopoverLayout from '@/components/TablePopoverLayout';
+import MyUpload from '@/components/UploadComponent';
 
 import moment from 'moment';
 import { filterObj } from '@/utils/tools';
@@ -20,7 +21,7 @@ const TeachingManage = ({
     ...props
 }) => {
     let { dispatch, form } = props;
-    let { bookList, gradeList, modalShow, modal2Show, startTime, endTime, gradeId, activeKey } = teachingmanage;
+    let { bookList, gradeList, modalShow, modal2Show, startTime, endTime, gradeId, activeKey, icon } = teachingmanage;
     let { getFieldDecorator, getFieldValue, resetFields } = form;
 
     const bookColumns = [
@@ -41,9 +42,12 @@ const TeachingManage = ({
         	dataIndex: 'gradeId',
             sorter: true
         }, {
-        	title: 'Icon',
+        	title: '教材封面图',
         	dataIndex: 'icon',
-        	sorter: true
+            sorter: true,
+            render: (text) => {
+               return (text) ? <img src={ text } style={{ width: 30, height: 40 }}/> : <span>无</span>
+            }
         }, {
         	title: '操作',
             dataIndex: 'action',
@@ -122,13 +126,15 @@ const TeachingManage = ({
 
     // 添加书籍
     const handleSubmit = () => {
+        let PP = {
+            name: getFieldValue('name'),
+            icon: getFieldValue('icon'),
+            gradeId: getFieldValue('gradeId'),
+            icon: icon
+        }
         dispatch({
         	type: 'teachingmanage/addBook',
-        	payload: {
-                name: getFieldValue('name'),
-                icon: getFieldValue('icon'),
-                gradeId: getFieldValue('gradeId')
-            }
+        	payload: filterObj(PP)
         })
     }
 
@@ -147,7 +153,12 @@ const TeachingManage = ({
 
     // 选择年级
     const changeGrage = (v) => {
-    	console.log('changeGrage::', v)
+    	dispatch({
+    		type: 'teachingmanage/setParam',
+    		payload: {
+    			gradeId: v
+    		}
+    	})
     }
     
     // 展示modal
@@ -185,6 +196,16 @@ const TeachingManage = ({
                 activeKey: key
             }
     	})
+    }
+    
+    // 文件上传成功
+    const uploadSuccess = (url) => {
+        dispatch({
+        	type: 'teachingmanage/setParam',
+        	payload: {
+        		icon: url
+        	}
+        })
     }
    
 	return (
@@ -256,18 +277,17 @@ const TeachingManage = ({
                         </FormItem>
 
                         <FormItem
-                            label="Icon"
+                            label="教材封面图"
                             {...formItemLayout}
                             >
                             {getFieldDecorator('icon', {
                                 initialValue: 'book',
                                 rules: [{
-                                    required: true, 
-                                    message: '请输入Icon!', 
+                                    message: '请上传书本素材!', 
                                     whitespace: true
                                 }],
                             })(
-                                <Input placeholder="请输入Icon" />
+                                <MyUpload uploadSuccess={uploadSuccess}></MyUpload>
                             )}
                         </FormItem>
 
