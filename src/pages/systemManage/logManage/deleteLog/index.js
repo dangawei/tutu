@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
-import BaseEchartsLayout from '@/components/BaseEchartsLayout';
 
 import { Form, DatePicker, Input, Select, Button } from 'antd';
 const FormItem = Form.Item;

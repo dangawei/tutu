@@ -127,6 +127,7 @@ const App = ({
 
 	return (
 		<Layout className={app.showSider ? "show-menu main-layout" : "main-layout"}>
+		    <Loader fullScreen spinning={loading.effects['app/fetch']} tip="加载中..." />
 	    	<div className="main-shadow" onClick={handleToggle}></div>
 			{
 	    		/*hideLeftView && hideLeftView.includes(pathname) ? null :*/
@@ -140,7 +141,6 @@ const App = ({
 					firstMenuText={firstMenuText} />
 	    	}
 		    <Layout className={"main-content"}>
-			    <Loader fullScreen spinning={loading.effects['app/fetch']} tip="加载中..." />
 				<HeaderLayout
 					collapsed={collapsed}
 					handleToggle={handleToggle}

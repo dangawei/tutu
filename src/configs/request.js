@@ -41,9 +41,7 @@ axios.interceptors.response.use(res => {
 // }
 
 // admin端
-export const BASIC_URL = '//api.admin.chengxuyuantoutiao.com/';
-// app端
-export const APP_URL = '//api.app.chengxuyuantoutiao.com/';
+export const BASIC_URL = '//api.admin.chengxuyuantoutiao.com/'
 
 /**
  * jsonp方法
@@ -52,29 +50,12 @@ export const APP_URL = '//api.app.chengxuyuantoutiao.com/';
  * @return {[type]}      [description]
  */
 let J = async (url, data) => {
-	return jsonp(url.indexOf('//') > -1 ? url : BASIC_URL + url, {
+	return jsonp(BASIC_URL + url, {
 		params: data || {},
 		timeout: DEFAULT_TIMEOUT,
 		jsonpCallback: 'callbackparam'
 	}).then(res => {
-		if(res) {
-			switch(res.code) {
-				case '100':
-					message.warning('登录失败。');
-					break;
-				case '1003':
-					message.warning('您没有权限，请联系管理员。');
-					break;
-				case '300':
-					message.error('服务器出错了，请稍候再重试。');
-					break;
-				case '1002':
-					message.error('请求数据超时。');
-					break;
-				default :
-					return res
-			}
-		}
+		return res
 	})
 }
 

@@ -42,7 +42,7 @@ const UserSetting = ({
         	title: '用户头像',
             dataIndex: 'avatar',
             render: (text) => {
-               return <a href={ text }>{ text }</a>
+               return (text) ? <img src={ text } style={{ width: 45, height: 25 }}/> : <span>无</span>
             }
         }, {
         	title: '手机号',
@@ -137,21 +137,6 @@ const UserSetting = ({
             }
         }
     ]
-
-    /**
-     * 表单输入
-     * @param  {[type]} payload    state更新数据
-     * @param  {[type]} fetchData: true          是否请求接口
-     * @return {[type]}            [description]
-     */
-    // const changeForm = (payload, formType = 'form', fetchData = true) => {
-    // 	dispatch({
-    // 		type: 'apprenticeQuality/changeForm',
-    // 		payload,
-    // 		formType,
-    // 		fetchData
-    // 	})
-    // }
     
     /**
      * 删除用户

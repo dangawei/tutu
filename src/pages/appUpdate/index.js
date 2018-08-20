@@ -2,15 +2,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
+import UploadComponent from '@/components/UploadComponent';
 import moment from 'moment';
 
 import { filterObj } from '@/utils/tools';
 import { formItemLayout } from '@/configs/layout';
 
-import { Form, DatePicker, Input, Button, Popconfirm, Tabs, Modal, Radio, Badge } from 'antd';
+import { Form, DatePicker, Input, Button, Popconfirm, Tabs, Modal, Radio, Badge, Select } from 'antd';
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const RadioGroup = Radio.Group;
+const Option = Select.Option;
 const { RangePicker } = DatePicker;
 
 const AppverUpdate = ({
@@ -18,7 +20,7 @@ const AppverUpdate = ({
 	...props
 }) => {
 	let { dispatch, form } = props;
-	let { appList, verList, activeKey, startTime, endTime, appname, modalShow } = appver;
+	let { appList, verList, activeKey, startTime, endTime, appname, modalShow, appTypeId } = appver;
 	let { getFieldDecorator, validateFieldsAndScroll, resetFields } = form;
 
 	let appColumns = [
@@ -29,10 +31,6 @@ const AppverUpdate = ({
 		}, {
 			title: '添加时间',
 			dataIndex: 'createdAt',
-			sorter: true
-		}, {
-			title: 'id',
-			dataIndex: 'id',
 			sorter: true
 		}, {
 			title: '状态',
@@ -52,9 +50,13 @@ const AppverUpdate = ({
 			dataIndex: 'action',
             render: (txt, record, index) => {
                 return <span>
-                    <Button type="primary" size="small" onClick={() => handleEnable(record, 'app')}>启用</Button>
-                    <Button size="small" style={{ marginLeft: 5 }} onClick={() => handleDisable(record, 'app')}>禁用</Button>
-                    <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record, 'app')}>
+                    {
+                        record.status === 2 && <Button type="primary" size="small" onClick={() => handleEnable(index, 'ver')}>启用</Button>
+					}
+					{
+                        record.status === 1 && <Button size="small" style={{ marginLeft: 5 }} onClick={() => handleDisable(index, 'ver')}>禁用</Button>
+					}
+                    <Popconfirm title="是否删除?" onConfirm={() => handleDelete(index, 'app')}>
                         <Button type="danger" size="small" style={{ marginLeft: 5 }}>删除</Button>
                     </Popconfirm>
                 </span>
@@ -70,21 +72,6 @@ const AppverUpdate = ({
 			title: '添加时间',
 			dataIndex: 'createdAt',
 			sorter: true
-		}, {
-			title: 'id',
-			dataIndex: 'id',
-			sorter: true
-		}, {
-			title: 'App类型id',
-			dataIndex: 'appTypeId',
-			sorter: true
-		}, {
-			title: 'apk下载地址',
-			dataIndex: 'apkUrl',
-			sorter: true,
-			render: (text) => {
-               return <a href={ text }>{ text }</a>
-            }
 		}, {
 			title: '状态',
 			dataIndex: 'status',
@@ -109,11 +96,17 @@ const AppverUpdate = ({
 			dataIndex: 'action',
             render: (txt, record, index) => {
                 return <span>
-                    <Button type="primary" size="small" onClick={() => handleEnable(record, 'ver')}>启用</Button>
-                    <Button size="small" style={{ marginLeft: 5 }} onClick={() => handleDisable(record, 'ver')}>禁用</Button>
-                    <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record, 'ver')}>
+					{
+                        record.status === 2 && <Button type="primary" size="small" onClick={() => handleEnable(index, 'ver')}>启用</Button>
+					}
+					{
+                        record.status === 1 && <Button size="small" style={{ marginLeft: 5 }} onClick={() => handleDisable(index, 'ver')}>禁用</Button>
+					}
+                    <Popconfirm title="是否删除?" onConfirm={() => handleDelete(index, 'ver')}>
                         <Button type="danger" size="small" style={{ marginLeft: 5 }}>删除</Button>
                     </Popconfirm>
+
+					<Button type="primary" size="small" style={{ marginLeft: 5 }} onClick={() => handleDownload(index)}>下载apk</Button>
                 </span>
             }
 		}
@@ -127,11 +120,12 @@ const AppverUpdate = ({
      * 删除App、版本类型
      * @param  {object} 列数据
      */
-    const handleDelete = (param, type) => {
+    const handleDelete = (idx, type) => {
+		const LIST = (type === 'app') ? appList : verList;
     	dispatch({
     		type: 'appver/deleteType',
     		payload: {
-				id: param.id,
+				id: LIST[idx].id,
 				type
 			}
     	})
@@ -141,11 +135,12 @@ const AppverUpdate = ({
 	 * 启用App、版本类型
 	 * @param  {object} 列数据
 	 */
-	const handleEnable = (param, type) => {
+	const handleEnable = (idx, type) => {
+		const LIST = (type === 'app') ? appList : verList;
 		dispatch({
 			type: 'appver/enableType',
 			payload: {
-				id: param.id,
+				id: LIST[idx].id,
 				type
 			}
 		})
@@ -155,14 +150,20 @@ const AppverUpdate = ({
 	 * 禁用App、版本类型
 	 * @param  {object} 列数据
 	 */
-	const handleDisable = (param, type) => {
+	const handleDisable = (idx, type) => {
+		const LIST = (type === 'app') ? appList : verList;
 		dispatch({
 			type: 'appver/disableType',
 			payload: {
-				id: param.id,
+				id: LIST[idx].id,
 				type
 			}
 		})
+	}
+
+	// 下载Apk
+	const handleDownload = (idx) => {
+		window.location.href = verList[idx].apkUrl;
 	}
 
 	// 切换tabs
@@ -206,6 +207,16 @@ const AppverUpdate = ({
 		})
 	}
 
+	// 筛选app类型
+	const changeApptype = (val) => {
+		dispatch({
+			type: 'appver/setParam',
+			payload: {
+				appTypeId: val
+			}
+		})
+	}
+
 	// 添加版本信息
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -233,8 +244,9 @@ const AppverUpdate = ({
 		let PP = {
 			pageNum: 1,
 			pageSize: 10,
+			appTypeId: appTypeId,
 			startTime: startTime,
-			endTime: endTime
+			endTime: endTime,
 		}
 		dispatch({
 			type: 'appver/getVerList',
@@ -288,6 +300,21 @@ const AppverUpdate = ({
 									/>
 							</FormItem>
 
+							{/*App类型*/}
+							<FormItem label="App类型">
+								<Select
+									showSearch
+									onFocus={() => dispatch({type: 'appver/getAppList'})}
+									onChange={v => changeApptype({appname: v})}
+									>
+									{
+										appList.map(item =>
+											<Option key={item.id} value={item.id}>{item.name}</Option>
+										)
+									}
+								</Select>
+							</FormItem>
+
 							<FormItem>
 								<Button type="primary" icon="search" onClick={handleSearch}>搜索</Button>
 							</FormItem>
@@ -295,6 +322,7 @@ const AppverUpdate = ({
 							<FormItem>
 								<Button type="primary" onClick={() => changeModalState('modalShow', true)}>添加版本</Button>
 							</FormItem>
+
 						</Form>
 					</FormInlineLayout>
 
@@ -326,6 +354,24 @@ const AppverUpdate = ({
 									rules: [{ required: true, message: '请输下载地址!' }],
 								})(
 									<Input placeholder="请输下载地址"/>
+								)}
+							</FormItem>
+
+							{/*App类型*/}
+							<FormItem 
+							    label="App类型"
+								{...formItemLayout}
+								>
+								{getFieldDecorator('appTypeId', {
+									rules: [{ required: true, message: '请选择App类型!' }],
+								})(
+									<Select showSearch>
+									{
+										appList.map(item =>
+											<Option key={item.id} value={item.id}>{item.name}</Option>
+										)
+									}
+									</Select>
 								)}
 							</FormItem>
 

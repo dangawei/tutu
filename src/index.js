@@ -33,14 +33,16 @@ if( ('onhashchange' in window) && ((typeof document.documentMode==='undefined') 
 }
 
 function hashChangeFire() {
-	var href = window.location.href
-	if(href.indexOf('/dftt/dftt-zq/') > -1) {
-		// import(/* webpackChunkName: "dftt-dftt-zq" */ './routes/dftt-dftt-zq.js').then(res => {
-		// 	app.router(res.default);
-		// 	app.start('#root');
-		// })
-	}  else {
-		app.router(require('./router').default);
-		app.start('#root');
-	}
+	// var href = window.location.href
+	// if(href.indexOf('/dftt/dftt-zq/') > -1) {
+	// 	import(/* webpackChunkName: "dftt-dftt-zq" */ './routes/dftt-dftt-zq.js').then(res => {
+	// 		app.router(res.default);
+	// 		app.start('#root');
+	// 	})
+	// }  else {
+	// 	app.router(require('./router').default);
+	// 	app.start('#root');
+	// }
+	app.router(require('./router').default);
+	app.start('#root');
 }

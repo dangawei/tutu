@@ -11,6 +11,7 @@ export default {
 		activeKey: '0',
 		startTime: '',
 		endTime: '',
+		appTypeId: '',
 		modalShow: false
 	},
 
@@ -77,6 +78,14 @@ export default {
 				message.success(res.data.message);
 				if (type === 'app') {
 					yield put({ type: 'getAppList' });
+				} else {
+					yield put({
+						type: 'getVerList',
+						payload: {
+							pageNum: 1,
+							pageSize: 10
+						}
+					})
 				}
 			}
 		},
@@ -84,11 +93,19 @@ export default {
 		*enableType({ payload }, { call, put }) {
 			const { type, id } = payload;
 			const _API = (payload.type === 'app') ? 'enableApptype' : 'enableVersion';
-			const res = yield call(api[_API], payload.id);
+			const res = yield call(api[_API], id);
             if (res) {
 				message.success(res.data.message);
 				if (type === 'app') {
 					yield put({ type: 'getAppList' });
+				} else {
+					yield put({
+						type: 'getVerList',
+						payload: {
+							pageNum: 1,
+							pageSize: 10
+						}
+					})
 				}
 			}
 		},
