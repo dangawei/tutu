@@ -93,12 +93,16 @@ const sourceMaterial = ({
     }
     // 添加素材
     const submitForm = (e) => {
+        console.log(11111);
         console.log(e)
         if (e!="false") {
             let PP = {
-                audio: getFieldValue('audio'),
-                icon: getFieldValue('icon'),
-                text: getFieldValue('text')
+                // audio: getFieldValue('audio'),
+                // icon: getFieldValue('icon'),
+                // text: getFieldValue('text')
+                audio: e.audio,
+                icon: e.icon,
+                text: e.text
             }
             dispatch({
                 type: 'sourcematerial/addSource',
@@ -107,7 +111,7 @@ const sourceMaterial = ({
         }else{
             handleSubmit('modalShow',false)
         }
-        
+
     }
     // 显示添加素材modal
     const handleSubmit=(flag, show)=>{
@@ -202,11 +206,14 @@ const sourceMaterial = ({
           okText="确认"
           cancelText="取消"
           footer={null}
+          sourcematerial={sourcematerial}
           >
-          <Form>
-              <VaildForm submitForm={submitForm}>
-              </VaildForm>
-          </Form>
+          {/*// <Form>
+          //     <VaildForm submitForm={submitForm}>
+          //     </VaildForm>
+          // </Form>*/}
+           <VaildForm submitForm={submitForm}>
+           </VaildForm>
       </Modal>
       <TableLayout
           dataSource={materialList}
