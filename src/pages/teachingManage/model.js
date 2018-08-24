@@ -7,6 +7,7 @@ export default {
 	state: {
         startTime: '',
         endTime: '',
+<<<<<<< HEAD
         gradeId: '',  // 年级id
         bookList: [], // 教材数据
         gradeList: [], // 年级数据
@@ -14,6 +15,17 @@ export default {
 		modal2Show: false,
 		activeKey: '0',  // 默认书籍
 		icon: ''         // 书籍封面
+=======
+		gradeId: '',  // 年级id
+		bookVersionId: '', // 版本id
+        bookList: [], // 教材数据
+		gradeList: [], // 年级数据
+		versionList: [], // 版本数据
+		modalShow: false,
+		activeKey: 'book',  // 默认tab-书籍管理
+		bookVersionName: '',   // 新增-教材版本名称
+        gradeName: '',         // 新增-年级名称
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	},
 
 	subscriptions: {
@@ -52,6 +64,15 @@ export default {
 						pageSize: 10
 					}
 				});
+<<<<<<< HEAD
+=======
+				yield put({
+					type: 'setParam',
+					payload: {
+            			modalShow: false
+            		}
+				});
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 			}
         },
 
@@ -87,6 +108,34 @@ export default {
             res && message.success(res.data.message);
 		},
 
+<<<<<<< HEAD
+=======
+		*getVersion({ payload }, { call, put }) {
+            const res = yield call(api.getVersion, payload);
+			if (res) {
+				yield put({
+            		type: 'save',
+            		payload: {
+            			versionList: (res.data.data) ? res.data.data : []
+            		}
+            	})
+			}
+        },
+
+		*addVersion({ payload }, { call, put }) {
+            const res = yield call(api.addVersion, payload);
+			if (res) {
+				message.success(res.data.message);
+				yield put({ type: 'getVersion' });
+			}
+        },
+
+        *updateVersion({ payload }, { call }) {
+            const res = yield call(api.updateVersion, payload);
+            res && message.success(res.data.message);
+		},
+
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 		*setParam({ payload }, { put }) {
 			for (let key in payload) {
 				yield put({

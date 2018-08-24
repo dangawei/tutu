@@ -8,6 +8,7 @@ const Option = Select.Option;
 
 const ValidForm = ({
     submitForm,
+<<<<<<< HEAD
     uploadSuccess,
     getRoleList,
     roleList,
@@ -15,6 +16,15 @@ const ValidForm = ({
 }) => {
     let { form } = props;
     const { getFieldDecorator, validateFieldsAndScroll, resetFields } = form;
+=======
+    getRoleList,
+    roleList,
+    resetForm,
+    ...props
+}) => {
+    let { form } = props;
+    const { getFieldDecorator, validateFieldsAndScroll, resetFields, setFieldsValue } = form;
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 
     // 提交表单
     const handleSubmit = (e) => {
@@ -22,14 +32,28 @@ const ValidForm = ({
         validateFieldsAndScroll((err, values) => {
             if (!err) {
                 delete values['confirm'];
+<<<<<<< HEAD
                 submitForm(values);
+=======
+                submitForm && submitForm(values);
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
             }
         });
     }
 
     // 重置表单
     const handleReset = (e) => {
+<<<<<<< HEAD
     	resetFields();
+=======
+        resetFields();
+        resetForm && resetForm();
+    }
+
+    // 设置头像
+    const uploadSuccess = (url) => {
+        setFieldsValue({'avatar': url})
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     }
 
 	return (
@@ -105,7 +129,11 @@ const ValidForm = ({
                     {getFieldDecorator('avatar', {
                         rules: [{ message: '请输入上传头像图片!' }],
                     })(
+<<<<<<< HEAD
                         <MyUpload uploadSuccess={uploadSuccess}></MyUpload>
+=======
+                        <MyUpload uploadSuccess={uploadSuccess} uploadTxt={'上传图片'}></MyUpload>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                     )}
                 </FormItem>
 
@@ -155,9 +183,15 @@ const ValidForm = ({
 
 ValidForm.propTypes = {
     submitForm: PropTypes.func, // 表单提交
+<<<<<<< HEAD
     uploadSuccess: PropTypes.func, // 上传成功
     getRoleList: PropTypes.func,   // 获取角色
     roleList: PropTypes.array,     // 角色列表
+=======
+    getRoleList: PropTypes.func,   // 获取角色
+    roleList: PropTypes.array,     // 角色列表
+    resetForm: PropTypes.func,     // 表单重置
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 };
 
 export default (Form.create()(ValidForm));

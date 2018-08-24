@@ -2,27 +2,43 @@ import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import FormInlineLayout from '@/components/FormInlineLayout';
 import TableLayout from '@/components/TableLayout';
+<<<<<<< HEAD
 import UploadComponent from '@/components/UploadComponent';
+=======
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 import MyUpload from '@/components/UploadComponent';
 import moment from 'moment';
 
 import { filterObj } from '@/utils/tools';
 import { formItemLayout } from '@/configs/layout';
 
+<<<<<<< HEAD
 import { Form, DatePicker, Input, Button, Popconfirm, Tabs, Modal, Radio, Badge, Select } from 'antd';
+=======
+import { Form, DatePicker, Input, Button, Popconfirm, Tabs, Modal, Radio, Badge, Select, message } from 'antd';
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const { RangePicker } = DatePicker;
+<<<<<<< HEAD
+=======
+const { TextArea } = Input;
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 
 const AppverUpdate = ({
 	appver,
 	...props
 }) => {
 	let { dispatch, form } = props;
+<<<<<<< HEAD
 	let { appList, verList, activeKey, startTime, endTime, appname, modalShow, appTypeId, apkUrl } = appver;
 	let { getFieldDecorator, validateFieldsAndScroll, resetFields } = form;
+=======
+	let { appList, verList, activeKey, startTime, endTime, appname, modalShow, appTypeId } = appver;
+	let { getFieldDecorator, validateFieldsAndScroll, resetFields, setFieldsValue } = form;
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 
 	let appColumns = [
         {
@@ -39,7 +55,11 @@ const AppverUpdate = ({
 			render: (txt) => {
 				switch (txt) {
 					case 1:
+<<<<<<< HEAD
 						return <Badge status="processing" text="正常"/>;	
+=======
+						return <Badge status="processing" text="正常"/>;
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 					case 2:
 						return <Badge status="warning" text="不可用"/>;
 					default:
@@ -52,10 +72,17 @@ const AppverUpdate = ({
             render: (txt, record, index) => {
                 return <span>
                     {
+<<<<<<< HEAD
                         record.status === 2 && <Button type="primary" size="small" onClick={() => handleEnable(index, 'ver')}>启用</Button>
 					}
 					{
                         record.status === 1 && <Button size="small" style={{ marginLeft: 5 }} onClick={() => handleDisable(index, 'ver')}>禁用</Button>
+=======
+                        record.status === 2 && <Button type="primary" size="small" onClick={() => handleEnable(index, 'app')}>启用</Button>
+					}
+					{
+                        record.status === 1 && <Button size="small" style={{ marginLeft: 5 }} onClick={() => handleDisable(index, 'app')}>禁用</Button>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 					}
                     <Popconfirm title="是否删除?" onConfirm={() => handleDelete(index, 'app')}>
                         <Button type="danger" size="small" style={{ marginLeft: 5 }}>删除</Button>
@@ -80,7 +107,11 @@ const AppverUpdate = ({
 			render: (txt) => {
 				switch (txt) {
 					case 1:
+<<<<<<< HEAD
 						return <Badge status="processing" text="正常"/>;	
+=======
+						return <Badge status="processing" text="正常"/>;
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 					case 2:
 						return <Badge status="warning" text="不可用"/>;
 					default:
@@ -131,7 +162,11 @@ const AppverUpdate = ({
 			}
     	})
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	/**
 	 * 启用App、版本类型
 	 * @param  {object} 列数据
@@ -176,7 +211,11 @@ const AppverUpdate = ({
 			}
     	})
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	// 选择时间框
 	const datepickerChange = (d, t) => {
 		dispatch({
@@ -200,12 +239,25 @@ const AppverUpdate = ({
 
 	// 添加App类型
 	const handleAddapptype = () => {
+<<<<<<< HEAD
 		dispatch({
 			type: 'appver/addApptype',
 			payload: {
 				name: appname
 			}
 		})
+=======
+		if (appname.trim()) {
+			dispatch({
+				type: 'appver/addApptype',
+				payload: {
+					name: appname
+				}
+			})
+		} else{
+            message.warning('请输入App名称')
+		}
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	}
 
 	// 筛选app类型
@@ -213,7 +265,11 @@ const AppverUpdate = ({
 		dispatch({
 			type: 'appver/setParam',
 			payload: {
+<<<<<<< HEAD
 				appTypeId: val
+=======
+				appTypeId: val.appname
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 			}
 		})
 	}
@@ -225,7 +281,10 @@ const AppverUpdate = ({
 			if (!err) {
 				values.forceUpdate && (values.forceUpdate = values.forceUpdate - 0);
 				values.updateDescribe && (values.updateDescribe = values.updateDescribe - 0);
+<<<<<<< HEAD
 				apkUrl && (values.apkUrl = apkUrl);
+=======
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 				dispatch({
 					type: 'appver/addVersion',
 					payload: {
@@ -238,6 +297,7 @@ const AppverUpdate = ({
 
 	// 表单取消
 	const handleReset = () => {
+<<<<<<< HEAD
 		resetFields();
 	}
 
@@ -247,10 +307,25 @@ const AppverUpdate = ({
 			type: 'appver/setParam',
 			payload: {
 				apkUrl: url
+=======
+		resetFields()
+		dispatch({
+			type: 'appver/setParam',
+			payload: {
+				modalShow: false
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 			}
 		})
 	}
 
+<<<<<<< HEAD
+=======
+	// 上传文件回调
+	const uploadSuccess = (url) => {
+		setFieldsValue({'apkUrl': url})
+	}
+
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	// 搜索版本信息
 	const handleSearch = () => {
 		let PP = {
@@ -347,6 +422,7 @@ const AppverUpdate = ({
 						footer={null}
 						>
 						<Form>
+<<<<<<< HEAD
 							<FormItem
 								label="版本名称"
 								{...formItemLayout}
@@ -360,6 +436,10 @@ const AppverUpdate = ({
 
 							{/*App类型*/}
 							<FormItem 
+=======
+							{/*App类型*/}
+							<FormItem
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 							    label="App类型"
 								{...formItemLayout}
 								>
@@ -377,6 +457,7 @@ const AppverUpdate = ({
 							</FormItem>
 
 							<FormItem
+<<<<<<< HEAD
 								label="apk下载地址"
 								{...formItemLayout}
 								>
@@ -384,6 +465,26 @@ const AppverUpdate = ({
 									rules: [{ message: '请上传apk包!' }],
 								})(
 									<MyUpload uploadSuccess={uploadSuccess}></MyUpload>
+=======
+								label="版本名称"
+								{...formItemLayout}
+								>
+								{getFieldDecorator('versionName', {
+									rules: [{ required: true, message: '请输入版本名!', whitespace: false }],
+								})(
+									<Input placeholder="请输入版本名"/>
+								)}
+							</FormItem>
+
+							<FormItem
+								label="apk上传"
+								{...formItemLayout}
+								>
+								{getFieldDecorator('apkUrl', {
+									rules: [{ required: true, message: '请上传apk包!' }],
+								})(
+									<MyUpload uploadSuccess={uploadSuccess} uploadTxt={'上传apk包'}></MyUpload>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 								)}
 							</FormItem>
 
@@ -392,16 +493,26 @@ const AppverUpdate = ({
 								{...formItemLayout}
 								>
 								{getFieldDecorator('forceUpdate', {
+<<<<<<< HEAD
 									rules: [{ message: '请选择是否强制更新!' }],
 								})(
 									<RadioGroup>
 										<Radio value="1">不需要</Radio>
 										<Radio value="2">需要</Radio>
+=======
+									initialValue: 1,
+									rules: [{ required: true, message: '请选择是否强制更新!' }],
+								})(
+									<RadioGroup>
+										<Radio value={1}>不需要</Radio>
+										<Radio value={2}>需要</Radio>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 									</RadioGroup>
 								)}
 							</FormItem>
 
 							<FormItem
+<<<<<<< HEAD
 								label="格式"
 								{...formItemLayout}
 								>
@@ -412,6 +523,15 @@ const AppverUpdate = ({
 										<Radio value="1">添加用户模块</Radio>
 										<Radio value="2">添加商城模块</Radio>
 									</RadioGroup>
+=======
+								label="版本描述"
+								{...formItemLayout}
+								>
+								{getFieldDecorator('updateDescribe', {
+									rules: [{ required: true, message: '请输入版本描述!' }],
+								})(
+									<TextArea placeholder="版本描述格式： 1.XXX 2.XXX 3.XXX" autosize={{ minRows: 3, maxRows: 6 }} />
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 								)}
 							</FormItem>
 
@@ -438,4 +558,7 @@ AppverUpdate.propTypes = {
 };
 
 export default connect(({ appver }) => ({ appver }))(Form.create()(AppverUpdate));
+<<<<<<< HEAD
 	
+=======
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5

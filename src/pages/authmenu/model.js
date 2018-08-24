@@ -6,9 +6,14 @@ export default {
 
 	state: {
 		tableData: [],
+<<<<<<< HEAD
 		startTime: '',
 		endTime: '',
 		modalShow: false
+=======
+		modalShow: false,
+		menuName: '',  // 菜单名称
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	},
 
 	subscriptions: {
@@ -45,6 +50,15 @@ export default {
 						pageSize: 10
 					}
 				});
+<<<<<<< HEAD
+=======
+				yield put({
+					type: 'setParam',
+					payload: {
+						modalShow: false
+					}
+				});
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 			}
 		},
 
@@ -53,6 +67,10 @@ export default {
 			const res = yield call(api.deleteMenu, payload);
 			if (res) {
 				message.success(res.data.message);
+<<<<<<< HEAD
+=======
+				yield put({ type: 'app/fetch' });
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 				yield put({
 					type: 'save',
 					payload: {

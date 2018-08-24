@@ -10,20 +10,35 @@ export default {
 		account: '',
 		modalShow: false,
 		siderList: [],
+<<<<<<< HEAD
 		menuIds: []   // 授权菜单
+=======
+		menuIds: [],   // 授权菜单
+		defaultCheckedKeys: [],  // 权限树默认选中
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	},
 
 	subscriptions: {
 		setup({ dispatch, history }) {
+<<<<<<< HEAD
 			dispatch({ 
 				type: 'getRole',
 				payload: ''
 			})
+=======
+			dispatch({ type: 'getRole' })
+			dispatch({ type: 'getSliderBar' })
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 		}
 	},
 
 	effects: {
+<<<<<<< HEAD
 		*getSliderBar({ payload }, { call, put }) {
+=======
+		*getSliderBar({ payload }, { call, put, select }) {
+			const { siderList } = yield select(state => state.app);
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 			const res = yield call(api_authmenu.getMenu, {
 				pageNum: 1,
 				pageSize: 10
@@ -31,6 +46,10 @@ export default {
 			yield put({
 				type: 'save',
 				payload: {
+<<<<<<< HEAD
+=======
+					defaultCheckedKeys: siderList.map(e => e.id + ''),
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 					siderList: (res.data.data) ? res.data.data.data : []
 				}
 			});
@@ -52,10 +71,20 @@ export default {
 			const res = yield call(api.addRole, payload);
 			if (res) {
 				message.success(res.data.message);
+<<<<<<< HEAD
 				yield put({
 					type: 'getRole',
 					payload: ''
 				})
+=======
+				yield put({ type: 'getRole' });
+				yield put({ 
+					type: 'setParam',
+					payload: {
+						modalShow: false
+					}
+				 });
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 			}
 		},
 
@@ -73,9 +102,18 @@ export default {
 			}
 		},
 
+<<<<<<< HEAD
 		*setauthRole({ payload }, { call }) {
 			const res = yield call(api.setauthRole, payload);
 			res && message.success(res.data.message);
+=======
+		*setauthRole({ payload }, { call, put }) {
+			const res = yield call(api.setauthRole, payload);
+			if (res) {
+				yield put({ type: 'app/fetch' });
+				message.success(res.data.message);
+			}
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 		},
 
 		*menusRole({ payload }, { call }) {

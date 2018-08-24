@@ -13,16 +13,28 @@ const RoleSetting = ({
     ...props
 }) => {
     let { dispatch, form } = props;
+<<<<<<< HEAD
     let { tableData, modalShow, account, siderList, menuIds } = roleSetting;
+=======
+    let { tableData, modalShow, account, siderList, menuIds, defaultCheckedKeys } = roleSetting;
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     let { getFieldDecorator, getFieldValue } = form;
 
     const columns = [
         {
+<<<<<<< HEAD
             title: '用户名',
             dataIndex: 'name',
             sorter: true
         }, {
         	title: '用户id',
+=======
+            title: '角色名',
+            dataIndex: 'name',
+            sorter: true
+        }, {
+        	title: '角色id',
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
         	dataIndex: 'id',
         	sorter: true
         }, {
@@ -36,6 +48,10 @@ const RoleSetting = ({
                             <div>
                                 <Tree
                                     checkable
+<<<<<<< HEAD
+=======
+                                    defaultCheckedKeys={defaultCheckedKeys}
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                                     onCheck={checkTree}
                                 >
                                     {
@@ -47,7 +63,11 @@ const RoleSetting = ({
                             </div>
                         } 
                         trigger="click">
+<<<<<<< HEAD
                         <Button type="primary" size="small" onClick={ getSiderData }>授权</Button>
+=======
+                        <Button type="primary" size="small">授权</Button>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                     </Popover>
                     <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record)}>
                         <Button type="danger" size="small" style={{ marginLeft: 10 }}>删除</Button>
@@ -61,14 +81,22 @@ const RoleSetting = ({
 	const renderTree = item => {
 		if (item.children && item.children.length) {
             return (
+<<<<<<< HEAD
 				<TreeNode title={item.menuName} key={item.id}>
+=======
+				<TreeNode title={item.menuName} key={item.id + ''}>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 					{
 						item.children.map(subitem => renderTree(subitem))
 					}
 				</TreeNode>
 			)
 		} else {
+<<<<<<< HEAD
 			return <TreeNode title={item.menuName} key={item.id} />
+=======
+			return <TreeNode title={item.menuName} key={item.id + ''} disableCheckbox={item.id === 113}/>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 		}
     }
     
@@ -114,6 +142,11 @@ const RoleSetting = ({
             		roleId: param.id
             	}
             })
+<<<<<<< HEAD
+=======
+        } else {
+            message.warning('请选择菜单授权！')
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
         }
     }
 

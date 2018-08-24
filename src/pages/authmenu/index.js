@@ -7,7 +7,11 @@ import TablePopoverLayout from '@/components/TablePopoverLayout';
 import VaildForm from './VaildForm';
 import { filterObj } from '@/utils/tools';
 
+<<<<<<< HEAD
 import { Form, Button, Popconfirm, Modal, Icon, DatePicker, Badge } from 'antd';
+=======
+import { Form, Button, Popconfirm, Modal, Icon, DatePicker, Badge, Input } from 'antd';
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 import moment from 'moment';
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -17,7 +21,11 @@ const Authmenu = ({
     ...props
 }) => {
     let { dispatch } = props;
+<<<<<<< HEAD
     let { tableData, modalShow, startTime, endTime } = authmenu;
+=======
+    let { tableData, modalShow, menuName, menuScope } = authmenu;
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 
     const columns = [
         {
@@ -33,6 +41,56 @@ const Authmenu = ({
         	dataIndex: 'id',
         	sorter: true
         }, {
+<<<<<<< HEAD
+=======
+        	title: '父级id',
+        	dataIndex: 'parentId',
+			sorter: true,
+			render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改父级id'}
+					valueData={[0, 1, 2, 3]}
+					defaultValue={text || 0}
+					onOk={v => 
+						dispatch({
+							type: 'authmenu/updateMenu',
+							payload: {
+								id: record.id,
+								parentId: v - 0
+							}
+						})
+					}/>
+        }, {
+        	title: '菜单作用',
+        	dataIndex: 'menuScope',
+			sorter: true,
+			render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改菜单作用'}
+					valueData={[{
+						id: 1,
+						name: '左侧菜单'
+					}, {
+						id: 2,
+						name: '按钮'
+					}, {
+						id: 3,
+						name: '接口'
+					}]}
+					optionKey={'id'}
+					optionItem={'name'}
+					defaultValue={text || 0}
+					onOk={v => 
+						dispatch({
+							type: 'authmenu/updateMenu',
+							payload: {
+								id: record.id,
+								menuScope: v - 0
+							}
+						})
+					}/>
+        }, {
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
         	title: '菜单名称',
         	dataIndex: 'menuName',
             sorter: true,
@@ -102,6 +160,7 @@ const Authmenu = ({
 					}/>
         }, {
         	title: '图标',
+<<<<<<< HEAD
         	dataIndex: 'icon',
             render: (text, record) =>
 				<TablePopoverLayout
@@ -117,6 +176,9 @@ const Authmenu = ({
 							}
 						})
 					}/>
+=======
+			dataIndex: 'icon'
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
         }, {
         	title: '操作',
             dataIndex: 'action',
@@ -158,6 +220,7 @@ const Authmenu = ({
 			}
         })
     }
+<<<<<<< HEAD
 
     // 选择时间框
     const datepickerChange = (d, t) => {
@@ -169,25 +232,46 @@ const Authmenu = ({
             }
         })
     }
+=======
+	
+	// 输入框收入
+	const handleInput = (e) => {
+		dispatch({
+        	type: 'authmenu/setParam',
+        	payload: {
+                menuName: e.target.value
+            }
+        })
+	}
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 
     // 搜索
     const handleSearch = () => {
     	let PP = {
     		pageNum: 1,
     		pageSize: 10,
+<<<<<<< HEAD
     		startTime: startTime,
     		endTime: endTime
+=======
+			menuName: menuName
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     	}
     	dispatch({
     		type: 'authmenu/getMenu',
     		payload: filterObj(PP)
     	})
+<<<<<<< HEAD
     }
    
+=======
+	}
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 
 	return (
 		<div>
 			<FormInlineLayout>
+<<<<<<< HEAD
 			    <Form layout="inline" style={{ marginLeft: 15 }}>
                     <FormItem label="时间">
                         <RangePicker
@@ -199,6 +283,12 @@ const Authmenu = ({
                             format="YYYY-MM-DD HH:mm"
                             onChange={datepickerChange}
                             />
+=======
+			    <Form layout="inline" style={{ marginLeft: 15 }}>				
+					{/*菜单名*/}
+                    <FormItem label="菜单名">
+                        <Input placeholder="输入菜单名" onChange={(e) => handleInput(e)}/>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                     </FormItem>
 
                     <FormItem>
@@ -219,10 +309,18 @@ const Authmenu = ({
                 onCancel= { () => changeModalState(false) }
                 footer={null}
                 >
+<<<<<<< HEAD
                 <Form>
                     <VaildForm submitForm={submitForm}>
                     </VaildForm>
                 </Form>
+=======
+                <VaildForm 
+					submitForm={submitForm}
+					resetForm={() => changeModalState(false)}
+					>
+				</VaildForm>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
             </Modal>
 
             <TableLayout

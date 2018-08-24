@@ -6,6 +6,10 @@ const RadioGroup = Radio.Group;
 
 const ValidForm = ({
     submitForm,
+<<<<<<< HEAD
+=======
+    resetForm,
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     ...props
 }) => {
     let { form } = props;
@@ -17,20 +21,33 @@ const ValidForm = ({
         validateFieldsAndScroll((err, values) => {
             if (!err) {
                 for (let key in values) {
+<<<<<<< HEAD
                     if (key === 'id' || key === 'parentId' || key === 'sortValue' || key === 'menuScope') {
+=======
+                    if (key === 'parentId' || key === 'sortValue' || key === 'menuScope') {
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                         if (values[key]) {
                             values[key] = values[key] - 0
                         }
                     }
                 }
+<<<<<<< HEAD
                 submitForm(values);
+=======
+                submitForm && submitForm(values);
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
             }
         });
     }
 
     // 重置表单
     const handleReset = (e) => {
+<<<<<<< HEAD
     	resetFields();
+=======
+        resetFields();
+        resetForm && resetForm();
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     }
 
 	return (
@@ -53,7 +70,11 @@ const ValidForm = ({
                     >
                     {getFieldDecorator('parentId', {
                         rules: [{
+<<<<<<< HEAD
                             required: true, message: '请输入父级id！（必须为数字）',
+=======
+                            required: true, message: '请输入父级id！（必须为数字）'
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                         }],
                     })(
                         <Input placeholder="一级菜单传0"/>
@@ -132,7 +153,12 @@ const ValidForm = ({
 };
 
 ValidForm.propTypes = {
+<<<<<<< HEAD
     submitForm: PropTypes.func // 表单提交
+=======
+    submitForm: PropTypes.func, // 表单提交
+    resetForm: PropTypes.func  // 表单重置
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 };
 
 export default (Form.create()(ValidForm));

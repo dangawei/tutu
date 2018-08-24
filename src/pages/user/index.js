@@ -42,7 +42,11 @@ const UserSetting = ({
         	title: '用户头像',
             dataIndex: 'avatar',
             render: (text) => {
+<<<<<<< HEAD
                return (text) ? <img src={ text } style={{ width: 45, height: 25 }}/> : <span>无</span>
+=======
+               return (text) ? <a href={ text } target='_blank'><img src={ text } style={{ width: 50, height: 35 }}/></a> : <span>无</span>
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
             }
         }, {
         	title: '手机号',
@@ -120,6 +124,30 @@ const UserSetting = ({
         	dataIndex: 'id',
         	sorter: true
         }, {
+<<<<<<< HEAD
+=======
+        	title: '角色',
+        	dataIndex: 'roleName',
+            sorter: true,
+            render: (text, record) =>
+				<TablePopoverLayout
+					title={'修改角色'}
+					valueData={roleList}
+					focusSelect={() => dispatch({type: 'userSetting/getRoleList'})}
+					optionKey={'id'}
+					optionItem={'name'}
+					defaultValue={text || '无'}
+					onOk={v => 
+						dispatch({
+							type: 'userSetting/updateUser',
+							payload: {
+								id: record.id,
+								roleId: v - 0
+							}
+						})
+					}/>
+        }, {
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
         	title: '创建时间',
         	dataIndex: 'createtime',
         	sorter: true
@@ -226,6 +254,7 @@ const UserSetting = ({
         })
     }
 
+<<<<<<< HEAD
     // 上传成功
     const uploadSuccess = (url) => {
         dispatch({
@@ -236,6 +265,8 @@ const UserSetting = ({
         })
     }
 
+=======
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     // 获取角色列表
     const getRoleList = () => {
         dispatch({ type: 'userSetting/getRoleList' })
@@ -294,9 +325,15 @@ const UserSetting = ({
                 >
                 <VaildForm 
                     submitForm={submitForm}
+<<<<<<< HEAD
                     uploadSuccess={uploadSuccess}
                     getRoleList={getRoleList}
                     roleList={roleList}
+=======
+                    getRoleList={getRoleList}
+                    roleList={roleList}
+                    resetForm={() => changeModalState(false)}
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                     >
                 </VaildForm>
             </Modal>

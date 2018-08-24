@@ -12,8 +12,12 @@ export default {
 		startTime: '',
 		endTime: '',
 		appTypeId: '',
+<<<<<<< HEAD
 		modalShow: false,
 		apkUrl: '',    // 上传apk包地址
+=======
+		modalShow: false
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	},
 
 	subscriptions: {
@@ -130,6 +134,15 @@ export default {
 						pageSize: 10
 					}
 				})
+<<<<<<< HEAD
+=======
+				yield put({ 
+					type: 'setParam',
+					payload: {
+						modalShow: false
+					}
+				})
+>>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 			}
 		},
 
