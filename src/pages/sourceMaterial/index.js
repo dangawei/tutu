@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import FormInlineLayout from '@/components/FormInlineLayout';
@@ -26,17 +22,13 @@ const sourceMaterial = ({
 }) => {
     let { dispatch, form } = props;
     let { materialList, modalShow, modal2Show, startTime, endTime, audio, icon,text } = sourcematerial;
-<<<<<<< HEAD
-    let { getFieldDecorator, getFieldValue, resetFields } = form;
 
-=======
     let { getFieldDecorator, getFieldValue, resetFields,getFieldProps } = form;
 
     // 鼠标放在图片上的事件
     const mouseEnter=(e)=>{
 
     }
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     const columns = [
         {
             title: '素材内容',
@@ -47,13 +39,9 @@ const sourceMaterial = ({
         	dataIndex: 'icon',
           sorter: true,
           render: (text) => {
-<<<<<<< HEAD
-             return (text) ? <img src={ text } style={{ width: 30, height: 40 }}/> : <span>无</span>
-=======
              return (text) ? <Popconfirm icon={<img src={ text } style={{ width: 110, height: 120 }}/>} cancelText="取消" okText="确定">
                     <img src={ text } style={{ width: 30, height: 40 }}/>
                 </Popconfirm>: <span>无</span>
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
           }
         }, {
         	title: '素材音频',
@@ -70,11 +58,7 @@ const sourceMaterial = ({
                     <Popconfirm title="是否删除?" onConfirm={() => handleDelete(record)}>
                         <Button type="danger" size="small" style={{ marginLeft: 10 }}>删除</Button>
                     </Popconfirm>
-<<<<<<< HEAD
-                    <Button type="primary" icon="add" onClick={()=>handleEdit('modal2Show', true)}>修改</Button>
-=======
                     <Button type="primary" size="small" style={{ marginLeft: 10 }} onClick={()=>handleEdit('modal2Show', true)}>修改</Button>
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
                 </span>
             }
         }
@@ -87,13 +71,9 @@ const sourceMaterial = ({
     const handleDelete = (param) => {
         dispatch({
       		type: 'sourcematerial/deleteSource',
-<<<<<<< HEAD
-      		payload: param.id
-=======
       		payload: {
                 id:param.id
             }
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
       	})
     }
 
@@ -112,21 +92,7 @@ const sourceMaterial = ({
     	})
     }
     // 添加素材
-<<<<<<< HEAD
-    const submitForm = () => {
-        let PP = {
-            audio: getFieldValue('audio'),
-            icon: getFieldValue('icon'),
-            text: getFieldValue('text')
-        }
-        dispatch({
-        	type: 'sourcematerial/addSource',
-        	payload: filterObj(PP)
-        })
-=======
     const submitForm = (e) => {
-        console.log(11111);
-        console.log(e)
         if (e!="false") {
             let PP = {
                 // audio: getFieldValue('audio'),
@@ -143,8 +109,6 @@ const sourceMaterial = ({
         }else{
             handleSubmit('modalShow',false)
         }
-
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
     }
     // 显示添加素材modal
     const handleSubmit=(flag, show)=>{
@@ -188,9 +152,6 @@ const sourceMaterial = ({
         	}
         })
     }
-
-<<<<<<< HEAD
-=======
     // 搜索素材内容
     const changeText = (event) => {
         dispatch({
@@ -200,7 +161,6 @@ const sourceMaterial = ({
             }
         })
     }
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 	return (
 		<div>
       <FormInlineLayout>
@@ -217,29 +177,11 @@ const sourceMaterial = ({
                       onChange={datepickerChange}
                       />
               </FormItem>
-
-<<<<<<< HEAD
-              {/*素材内容
-              <FormItem label="素材内容">
-                  <Select
-                      showSearch
-                      onFocus={() => dispatch({type: 'sourceMaterial/getGrade'})}
-                      onChange={v => changeGrage({gradeId: v})}
-                      >
-                      {
-                          gradeList.map(item =>
-                              <Option key={item.id} value={item.id}>{item.gradeName}</Option>
-                          )
-                      }
-                  </Select>
-              </FormItem>*/}
-=======
               {/*素材内容*/}
               <FormItem label="素材内容">
                     {/*{getFieldDecorator('text')(<Input placeholder="请输入素材内容" onChange={ changeText(text)}/>)} {...getFieldProps('text', {})}*/}
                     <Input placeholder="请输入素材内容" onChange={ changeText}/>
               </FormItem>
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
 
               <FormItem>
                   <Button type="primary" icon="search" onClick={handleSearch}>搜索</Button>
@@ -259,13 +201,6 @@ const sourceMaterial = ({
           okText="确认"
           cancelText="取消"
           footer={null}
-<<<<<<< HEAD
-          >
-          <Form>
-              <VaildForm submitForm={submitForm}>
-              </VaildForm>
-          </Form>
-=======
           sourcematerial={sourcematerial}
           >
           {/*// <Form>
@@ -274,7 +209,6 @@ const sourceMaterial = ({
           // </Form>*/}
            <VaildForm submitForm={submitForm}>
            </VaildForm>
->>>>>>> bd1d7b16fef4c09e7d8331cc773671042cfe65f5
       </Modal>
       <TableLayout
           dataSource={materialList}
